@@ -8,7 +8,7 @@ package intergalactic_fighters;
 import java.awt.Point;
 
 /**
- *
+ * a
  * @author marton552
  */
 public class Bullet {
