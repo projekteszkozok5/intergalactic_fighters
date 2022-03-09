@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * @version 1.0.2
  * @since 2021. 02. 26.
  */
-public class Player{
+public class Player extends Entity{
     //Játékos tulajdonságok
     /**
      * Health Point of player
