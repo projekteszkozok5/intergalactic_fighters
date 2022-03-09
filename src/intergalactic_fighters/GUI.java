@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Random;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -45,6 +46,7 @@ public class GUI {
         });
         
         frame.addKeyListener(new MoveKeyListener());
+
         //GameArea.addKeyListener(new MoveKeyListener());
        
         GameArea.setPreferredSize(new Dimension(800, 600));
@@ -76,6 +78,7 @@ public class GUI {
             if(e.getKeyCode() == 87)
             {   
                 GameArea.Players.get(0).moveForward();
+               enemyMovement();
             }
             //S pressed
             if(e.getKeyCode() == 83)
@@ -92,6 +95,7 @@ public class GUI {
             {
                 GameArea.Players.get(0).moveRight();
             }
+            enemyMovement();
         }
 
         public void keyReleased(KeyEvent e) {
@@ -104,5 +108,25 @@ public class GUI {
                 GameArea.Players.get(0).setZeroX();
             }
         }
+
+    }
+    public void enemyMovement(){
+        Random r = new Random();
+        int randomNumber=(r.nextInt((4-1)+1)+1);
+        switch (randomNumber){
+            case 1:
+                GameArea.Enemies.get(0).moveForward();
+                break;
+            case 2:
+                GameArea.Enemies.get(0).moveBackward();
+                break;
+            case 3:
+                GameArea.Enemies.get(0).moveRight();
+                break;
+            case 4:
+                GameArea.Enemies.get(0).moveLeft();
+                break;
+        }
+
     }
 }

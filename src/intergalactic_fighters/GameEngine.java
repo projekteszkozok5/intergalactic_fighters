@@ -26,6 +26,7 @@ import javax.swing.Timer;
 public class GameEngine extends JPanel {
     
     public static ArrayList<Player> Players;
+    public static ArrayList<Player> Enemies;
     public ArrayList<Wall> Walls;
     private Image OrangeImage;
     private Image GreenImage;
@@ -59,9 +60,11 @@ public class GameEngine extends JPanel {
         BlackCircle = new ImageIcon(this.getClass().getResource("/design/images/circle.png")).getImage();
         Walls = new ArrayList<>();
         Players = new ArrayList<>();
+        Enemies = new ArrayList<>();
         Players.add(new Player("Player1", gridSize, gridSize, gridSize, gridSize, BlackCircle));//player
+        Enemies.add(new Player("Enemy1", gridSize+10, gridSize+10, gridSize, gridSize, BlackCircle));//"enemy"
     }
-    
+
     public void addWall( int x, int y, int width, int height, Image image){
         Walls.add(new Wall(x,y,width,height,image));
     }
@@ -85,6 +88,7 @@ public class GameEngine extends JPanel {
         }
         for (int i = Players.size() - 1; i >= 0 ; i--) {
             Players.get(i).draw(grphcs, zoomLevel, Xoffset, Yoffset);
+            Enemies.get(i).draw(grphcs, zoomLevel, Xoffset, Yoffset);
         }
         
         grphcs.drawString("Health: " + Integer.toString(Players.get(PlayerNumber-1).getHp()), 10, 20);
@@ -123,6 +127,7 @@ public class GameEngine extends JPanel {
                 //mozgas
                 for (int i = 0; i < Players.size(); i++) {
                     Players.get(i).move(motionSpeed);
+                    Enemies.get(i).move(motionSpeed);
                 }
                 
                 //cameracorrection                                                        |      zoomlál elcsuszik.    |    paros szamu racs van ezzel kozepre helyzem
