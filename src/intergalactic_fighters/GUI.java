@@ -5,19 +5,15 @@
  */
 package intergalactic_fighters;
 
-import java.awt.Dimension;
-import java.awt.Image;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.util.Random;
-import javax.swing.BoxLayout;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 /**
  *
@@ -78,22 +74,26 @@ public class GUI {
             if(e.getKeyCode() == 87)
             {   
                 GameArea.Players.get(0).moveForward();
-               enemyMovement();
+                GameArea.Players.get(0).setImage(new ImageIcon(this.getClass().getResource("/design/images/playership.png")).getImage());
+
             }
             //S pressed
             if(e.getKeyCode() == 83)
             {
                 GameArea.Players.get(0).moveBackward();
+                GameArea.Players.get(0).setImage(new ImageIcon(this.getClass().getResource("/design/images/playershipdown.png")).getImage());
             }
             //A pressed
             if(e.getKeyCode() == 65)
             {
                 GameArea.Players.get(0).moveLeft();
+                GameArea.Players.get(0).setImage(new ImageIcon(this.getClass().getResource("/design/images/playershipleft.png")).getImage());
             }
             //D pressed
             if(e.getKeyCode() == 68)
             {
                 GameArea.Players.get(0).moveRight();
+                GameArea.Players.get(0).setImage(new ImageIcon(this.getClass().getResource("/design/images/playershipright.png")).getImage());
             }
             enemyMovement();
         }
@@ -116,15 +116,19 @@ public class GUI {
         switch (randomNumber){
             case 1:
                 GameArea.Enemies.get(0).moveForward();
+                GameArea.Enemies.get(0).setImage(new ImageIcon(this.getClass().getResource("/design/images/enemyship.png")).getImage());
                 break;
             case 2:
                 GameArea.Enemies.get(0).moveBackward();
+                GameArea.Enemies.get(0).setImage(new ImageIcon(this.getClass().getResource("/design/images/enemyshipdown.png")).getImage());
                 break;
             case 3:
                 GameArea.Enemies.get(0).moveRight();
+                GameArea.Enemies.get(0).setImage(new ImageIcon(this.getClass().getResource("/design/images/enemyshipright.png")).getImage());
                 break;
             case 4:
                 GameArea.Enemies.get(0).moveLeft();
+                GameArea.Enemies.get(0).setImage(new ImageIcon(this.getClass().getResource("/design/images/enemyshipleft.png")).getImage());
                 break;
         }
 

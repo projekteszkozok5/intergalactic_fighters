@@ -223,4 +223,11 @@ public class Player{
         x += moveX * speed;
         y += moveY * speed;
     }
+
+    public void setImage(Image image){
+        this.image=image;
+    }
+    public Image getImage(){
+        return this.image;
+    }
 }

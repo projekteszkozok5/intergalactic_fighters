@@ -33,6 +33,8 @@ public class GameEngine extends JPanel {
     private Image BlueImage;
     private Image PurpleImage;
     private Image BlackCircle;
+    private Image PlayerShip;
+    private Image EnemyShip;
     private Timer newFrameTimer;
     private final int FPS = 60;
     private int gridSize = 40;//segedhalo racsmerete
@@ -58,11 +60,13 @@ public class GameEngine extends JPanel {
         BlueImage = new ImageIcon("design/images/blue.png").getImage();
         PurpleImage = new ImageIcon("design/images/purple.png").getImage();
         BlackCircle = new ImageIcon(this.getClass().getResource("/design/images/circle.png")).getImage();
+        PlayerShip = new ImageIcon(this.getClass().getResource("/design/images/playership.png")).getImage();
+        EnemyShip = new ImageIcon(this.getClass().getResource("/design/images/enemyship.png")).getImage();
         Walls = new ArrayList<>();
         Players = new ArrayList<>();
         Enemies = new ArrayList<>();
-        Players.add(new Player("Player1", gridSize, gridSize, gridSize, gridSize, BlackCircle));//player
-        Enemies.add(new Player("Enemy1", gridSize+10, gridSize+10, gridSize, gridSize, BlackCircle));//"enemy"
+        Players.add(new Player("Player1", gridSize, gridSize, gridSize, gridSize, PlayerShip));//player
+        Enemies.add(new Player("Enemy1", gridSize+10, gridSize+10, gridSize, gridSize, EnemyShip));//"enemy"
     }
 
     public void addWall( int x, int y, int width, int height, Image image){
