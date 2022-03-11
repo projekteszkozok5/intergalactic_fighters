@@ -5,10 +5,20 @@
  */
 package intergalactic_fighters;
 
+import java.awt.Point;
+
 /**
  *
  * @author Majercsik Szabolcs
  */
 public class Boss {
-    
+    private Point position;
+    private Point direction;
+    private int lives;
+
+    public Boss(Point position, Point direction, int lives) {
+        this.position = position;
+        this.direction = direction;
+        this.lives = lives;
+    }
 }
