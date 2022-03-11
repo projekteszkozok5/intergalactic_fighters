@@ -19,5 +19,6 @@ public class BasicBackground {
     public BasicBackground(){
         this.speed = 1;
         img = new ImageIcon("src/design/images/backs/orange.png").getImage();
+        
     }
 }
