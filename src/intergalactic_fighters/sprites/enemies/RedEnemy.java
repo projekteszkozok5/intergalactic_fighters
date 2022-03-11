@@ -6,11 +6,16 @@
 package intergalactic_fighters.sprites.enemies;
 
 import intergalactic_fighters.Enemy;
+import java.awt.Point;
 
 /**
  *
  * @author marton552
  */
 public class RedEnemy extends Enemy {
+    
+    public RedEnemy(Point position, Point direction, int lives) {
+        super(position, direction, lives);
+    }
     
 }
