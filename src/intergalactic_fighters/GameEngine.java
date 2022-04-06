@@ -5,6 +5,7 @@
  */
 package intergalactic_fighters;
 
+import intergalactic_fighters.backgrounds.BasicBackground;
 import intergalactic_fighters.sprites.enemies.CrazyEnemy;
 import intergalactic_fighters.sprites.enemies.EasyEnemy;
 import java.awt.Color;
@@ -47,6 +48,7 @@ public class GameEngine extends JPanel {
     private int motionSpeed = 3; //pixel jump/tick
     private int PlayerNumber;
     private int score = 0;
+    private ArrayList<BasicBackground> backs;
 
     public void addScore(int score) {
         this.score += score;
@@ -79,6 +81,10 @@ public class GameEngine extends JPanel {
         for (int i = 0; i < 5; i++) {
             Enemies.add(new EasyEnemy("EasyEnemy"+i, (int)(800/zoomLevel/2+gridSize*i), gridSize+10, gridSize, gridSize, EnemyShip));//"enemy"
         }
+        BasicBackground back1 = new BasicBackground();
+        back1.setPosY(-800);
+        backs = new ArrayList<>();
+        backs.add(back1);
     }
 
     public void addWall( int x, int y, int width, int height, Image image){
@@ -102,6 +108,19 @@ public class GameEngine extends JPanel {
         for (int i = Walls.size() - 1; i >= 0 ; i--) {
             Walls.get(i).draw(grphcs, zoomLevel, Xoffset, Yoffset);
         }*/
+        for (int i = 0; i < backs.size(); i++) {
+            backs.get(i).step();
+            grphcs.drawImage(backs.get(i).getImg(), 0, (int)(backs.get(i).getPosY()), (int)(800), (int)(1400), null);
+        }
+        if(backs.get(0).getPosY()>0 && backs.get(0).isLive()){
+            backs.get(0).setLive(false);
+            backs.add(new BasicBackground());
+        }
+        if(backs.get(0).getPosY()>600){
+            backs.remove(0);
+        }
+        
+        
         for (int i = Players.size() - 1; i >= 0 ; i--) {
             Players.get(i).draw(grphcs, zoomLevel, Xoffset, Yoffset);
         }
@@ -112,6 +131,7 @@ public class GameEngine extends JPanel {
             }
             else Enemies.get(i).draw(grphcs, zoomLevel, Xoffset, Yoffset);
         }
+        
         
         grphcs.drawString("Health: " + Integer.toString(Players.get(PlayerNumber-1).getHp()), 10, 20);
         grphcs.drawString("Score: " + Integer.toString(score) + "/" + Integer.toString(20), 100, 20);
