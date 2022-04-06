@@ -11,19 +11,30 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 public class Player{
-    private int HP; //HealthPoint
+    protected double maxHP = 100;
+    protected double HP;
+    protected double HealPerSecond = 1;
+    protected double speed = 3;
     protected String name;
     protected int x;
     protected int y;
     protected int width;
     protected int height;
     protected Image image;
-    private int moveX = 0;
-    private int moveY = 0;
-    protected int bulletSpeed = 7;
+    protected int moveX = 0;
+    protected int moveY = 0;
+    protected double bulletSpeed;
     protected ArrayList<Bullet> bullets;
+    protected int maxBullets = 2;
     protected Point direction;
     protected boolean isDead = false;
+    protected boolean collided = false;
+    protected String whatCollected = "";
+    private int cooldown = 15;
+
+    public double getBulletSpeed() {
+        return bulletSpeed;
+    }
 
     public int getX()
     {
@@ -50,6 +61,7 @@ public class Player{
         this.image = image;
         bullets = new ArrayList<>();
         direction = new Point(0,-1);
+        bulletSpeed=7.0;
     }
     public void loseHp(int points)
     {
@@ -59,7 +71,8 @@ public class Player{
     
     public int getHp()
     {
-        return HP;
+        if(HP <= 0) return 0;
+        return (int)HP;
     }
 
     public boolean isIsDead() {
@@ -67,11 +80,15 @@ public class Player{
     }
     
     
-    public void draw(Graphics g, int zoomLevel, int Xoffset, int Yoffset) {
-        g.drawImage(image, x * zoomLevel + Xoffset, y * zoomLevel + Yoffset, width * zoomLevel, height * zoomLevel, null);
+    public void draw(Graphics g, double zoomLevel, int Xoffset, int Yoffset) {
+        g.drawImage(image, (int)(x * zoomLevel + Xoffset), (int)(y * zoomLevel + Yoffset), (int)(width * zoomLevel), (int)(height * zoomLevel), null);
         for (int i = 0; i < bullets.size(); i++) {
             if(bullets.get(i).isIsDead()) bullets.remove(i);
-            else g.drawImage(bullets.get(i).getImg(), bullets.get(i).getStartPos().x* zoomLevel + Xoffset, bullets.get(i).getStartPos().y * zoomLevel + Yoffset, 15 * zoomLevel, 15 * zoomLevel, null);
+            else g.drawImage(bullets.get(i).getImg(),
+                    (int)(bullets.get(i).getStartPos().x* zoomLevel + Xoffset),
+                    (int)(bullets.get(i).getStartPos().y * zoomLevel + Yoffset),
+                    (int)(15 * zoomLevel),
+                    (int)(15 * zoomLevel), null);
         }
     }
 
@@ -108,10 +125,18 @@ public class Player{
         moveX = 0;
     }
 
-    public void move(int speed)
+    public void move()
     {
-        x += moveX * speed;
-        y += moveY * speed;
+        if(x + moveX * speed > 0 && x + moveX * speed < 800/GameEngine.zoomLevel-width) x += moveX * speed;
+        else collided = true;
+        if(y + moveY * speed > 0 && y + moveY * speed < 600/GameEngine.zoomLevel-height) y += moveY * speed;
+        else collided = true;
+        cooldown--;
+        if(cooldown<0){
+            whatCollected="";
+            if(HP<maxHP)HP+=HealPerSecond/50;
+        }
+        if(name=="Player1")collect();
     }
 
     public void setImage(Image image){
@@ -122,7 +147,45 @@ public class Player{
     }
     
     public void shoot(){
+        if(bullets.size()+1<=maxBullets){
         Bullet b = new Bullet(new Point(x+width/2-15/2,y+height/2-15/2), direction, bulletSpeed, "player");
         bullets.add(b);
+        System.out.println(getX()+","+getY());
+        }
+    }
+
+    public ArrayList<Bullet> getBullets() {
+        return bullets;
+    }
+
+    public int getMaxBullets() {
+        return maxBullets;
+    }
+
+    public double getMaxHP() {
+        return maxHP;
+    }
+
+    public String getWhatCollected() {
+        return whatCollected;
+    }
+    
+    private void collect(){
+        for (int i = 0; i < GameEngine.powerups.size(); i++) {
+            if(inBox(GameEngine.powerups.get(i).getX(),GameEngine.powerups.get(i).getY())){
+                maxHP+=GameEngine.powerups.get(i).getPowerups()[0]*5;
+                HealPerSecond+=GameEngine.powerups.get(i).getPowerups()[1];
+                speed+=GameEngine.powerups.get(i).getPowerups()[2]/2;
+                bulletSpeed+=GameEngine.powerups.get(i).getPowerups()[3]/2;
+                maxBullets+=GameEngine.powerups.get(i).getPowerups()[4];
+                whatCollected = GameEngine.powerups.get(i).getWhatisit();
+                cooldown = 15;
+                GameEngine.powerups.remove(i);
+            }
+        }
+    }
+    
+    private boolean inBox(int x0, int y0){
+        return (x0 >= x && x0 <= x+width && y0 >= y && y0 <= y+width);
     }
 }
