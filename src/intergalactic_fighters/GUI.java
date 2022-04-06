@@ -45,9 +45,6 @@ public class GUI {
        
         GameArea.setPreferredSize(new Dimension(800, 600));
         
-        map = new Map();
-        GameArea.addWalls(map.generateMap());
-        
         JPanel container = new JPanel();
         container.setLayout(new BoxLayout(container, BoxLayout.X_AXIS));
         container.add(GameArea);
