@@ -15,7 +15,7 @@ import java.awt.Point;
 public class RedEnemy extends Enemy {
     
     public RedEnemy(Point position, Point direction, int lives) {
-        super(position, direction, lives);
+        super("red",position.x, position.y, 100,100,null);
     }
     
 }

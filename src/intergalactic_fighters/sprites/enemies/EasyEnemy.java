@@ -12,10 +12,10 @@ import java.awt.Point;
  *
  * @author marton552
  */
-public class GreenEnemy extends Enemy{
+public class EasyEnemy extends Enemy{
     
-    public GreenEnemy(Point position, Point direction, int lives) {
-        super(position, direction, lives);
+    public EasyEnemy(Point position, int lives) {
+        super("easy",position.x, position.y, 100,100,null);
     }
     
 }

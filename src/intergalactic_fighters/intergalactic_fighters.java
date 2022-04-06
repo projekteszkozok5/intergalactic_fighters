@@ -5,7 +5,6 @@
  */
 package intergalactic_fighters;
 
-import gameTest.GUI;
 import javax.swing.Timer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

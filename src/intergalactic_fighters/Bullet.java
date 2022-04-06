@@ -15,9 +15,9 @@ public class Bullet {
     private Point startPos;
     private Point direction;
     private double speed;
-    private Entity owner;
+    private String owner;
 
-    public Bullet(Point startPos, Point direction, double speed, Entity owner) {
+    public Bullet(Point startPos, Point direction, double speed, String owner) {
         this.startPos = startPos;
         this.direction = direction;
         this.speed = speed;
