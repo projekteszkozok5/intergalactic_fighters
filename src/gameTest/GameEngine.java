@@ -3,10 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gameTest;
+package intergalactic_fighters;
 
-import gameTest.Wall;
-import gameTest.Player;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -28,12 +26,15 @@ import javax.swing.Timer;
 public class GameEngine extends JPanel {
     
     public static ArrayList<Player> Players;
+    public static ArrayList<Player> Enemies;
     public ArrayList<Wall> Walls;
     private Image OrangeImage;
     private Image GreenImage;
     private Image BlueImage;
     private Image PurpleImage;
     private Image BlackCircle;
+    private Image PlayerShip;
+    private Image EnemyShip;
     private Timer newFrameTimer;
     private final int FPS = 60;
     private int gridSize = 40;//segedhalo racsmerete
@@ -59,11 +60,15 @@ public class GameEngine extends JPanel {
         BlueImage = new ImageIcon("design/images/blue.png").getImage();
         PurpleImage = new ImageIcon("design/images/purple.png").getImage();
         BlackCircle = new ImageIcon(this.getClass().getResource("/design/images/circle.png")).getImage();
+        PlayerShip = new ImageIcon(this.getClass().getResource("/design/images/playership.png")).getImage();
+        EnemyShip = new ImageIcon(this.getClass().getResource("/design/images/enemyship.png")).getImage();
         Walls = new ArrayList<>();
         Players = new ArrayList<>();
-        Players.add(new Player("Player1", gridSize, gridSize, gridSize, gridSize, BlackCircle));//player
+        Enemies = new ArrayList<>();
+        Players.add(new Player("Player1", gridSize, gridSize, gridSize, gridSize, PlayerShip));//player
+        Enemies.add(new Player("Enemy1", gridSize+10, gridSize+10, gridSize, gridSize, EnemyShip));//"enemy"
     }
-    
+
     public void addWall( int x, int y, int width, int height, Image image){
         Walls.add(new Wall(x,y,width,height,image));
     }
@@ -87,6 +92,7 @@ public class GameEngine extends JPanel {
         }
         for (int i = Players.size() - 1; i >= 0 ; i--) {
             Players.get(i).draw(grphcs, zoomLevel, Xoffset, Yoffset);
+            Enemies.get(i).draw(grphcs, zoomLevel, Xoffset, Yoffset);
         }
         
         grphcs.drawString("Health: " + Integer.toString(Players.get(PlayerNumber-1).getHp()), 10, 20);
@@ -125,6 +131,7 @@ public class GameEngine extends JPanel {
                 //mozgas
                 for (int i = 0; i < Players.size(); i++) {
                     Players.get(i).move(motionSpeed);
+                    Enemies.get(i).move(motionSpeed);
                 }
                 
                 //cameracorrection                                                        |      zoomlál elcsuszik.    |    paros szamu racs van ezzel kozepre helyzem
