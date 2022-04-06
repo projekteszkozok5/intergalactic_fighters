@@ -22,6 +22,7 @@ public class Player{
     private int moveY = 0;
     protected int bulletSpeed = 7;
     protected ArrayList<Bullet> bullets;
+    protected int maxBullets = 2;
     protected Point direction;
     protected boolean isDead = false;
     protected boolean collided = false;
@@ -60,6 +61,7 @@ public class Player{
     
     public int getHp()
     {
+        if(HP <= 0) return 0;
         return HP;
     }
 
@@ -129,8 +131,23 @@ public class Player{
     }
     
     public void shoot(){
+        if(bullets.size()+1<=maxBullets){
         Bullet b = new Bullet(new Point(x+width/2-15/2,y+height/2-15/2), direction, bulletSpeed, "player");
         bullets.add(b);
         System.out.println(getX()+","+getY());
+        }
     }
+
+    public int getHP() {
+        return HP;
+    }
+
+    public ArrayList<Bullet> getBullets() {
+        return bullets;
+    }
+
+    public int getMaxBullets() {
+        return maxBullets;
+    }
+    
 }

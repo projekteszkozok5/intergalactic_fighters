@@ -61,6 +61,7 @@ public class Bullet {
     private void move(){
         if(direction.x == 0) startPos.y+=direction.y*speed;
         else startPos.x+=direction.x*speed;
+        if(!inBox(0, 0, (int)(800/GameEngine.zoomLevel))) isDead=true;
     }
     
     private void detectCollision(){

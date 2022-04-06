@@ -135,8 +135,14 @@ public class GameEngine extends JPanel {
         }
         
         grphcs.setFont(new Font("TimesRoman", Font.PLAIN, 20)); 
+        grphcs.setColor(Color.white);
+        grphcs.fillRect (600, 550, 200, 50);
+        grphcs.fillRect (0, 550, 200, 50);
         grphcs.setColor(Color.red);
-        grphcs.drawString("Health: " + Integer.toString(Players.get(PlayerNumber-1).getHp()), 680, 580);
+        grphcs.drawString("HP:", 560, 580);
+        grphcs.fillRect (605, 555, (int)(190*(Players.get(0).getHp()/100.0f)), 40);
+        grphcs.setColor(Color.blue);
+        grphcs.fillRect (5, 555, (int)(190*(Players.get(0).getBullets().size()/(double)Players.get(0).getMaxBullets())), 40);
         grphcs.setFont(new Font("TimesRoman", Font.PLAIN, 30)); 
         grphcs.drawString("Score: " + Integer.toString(score) + "/" + Integer.toString(10), 320, 40);
     }
