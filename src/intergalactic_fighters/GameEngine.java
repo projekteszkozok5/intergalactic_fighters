@@ -87,7 +87,7 @@ public class GameEngine extends JPanel {
             Enemies.add(new CrazyEnemy("CrazyEnemy" + i, (int) (800 / zoomLevel / 2 + gridSize * i), gridSize + 10, gridSize, gridSize, EnemyShip));//"enemy"
             c++;
         }
-        for (int i = 0; i < (10+(level*2) - rand); i++) {
+        for (int i = 0; i < ((10+(level*2)) - rand); i++) {
             Enemies.add(new EasyEnemy("EasyEnemy" + i, (int) (800 / zoomLevel / 2 + gridSize * i - 150), gridSize + 10, gridSize, gridSize, EnemyShip));//"enemy"
             c++;
         }
@@ -139,7 +139,7 @@ public class GameEngine extends JPanel {
         grphcs.fillRect(5, 555, (int) (190 * (Players.get(0).getBullets().size() / (double) Players.get(0).getMaxBullets())), 40);
         grphcs.setFont(new Font("TimesRoman", Font.PLAIN, 30));
         grphcs.setColor(Color.red);
-        grphcs.drawString("Score: " + Integer.toString(score) + "/" + Integer.toString(10), 320, 40);
+        grphcs.drawString("Score: " + Integer.toString(score) + "/" + Integer.toString(10+(level*2)), 320, 40);
         grphcs.setFont(new Font("TimesRoman", Font.PLAIN, 20));
         grphcs.setColor(Color.green);
         grphcs.drawString(Players.get(0).getWhatCollected(), 320, 580);
@@ -169,6 +169,7 @@ public class GameEngine extends JPanel {
                 for (int i = 0; i < Enemies.size(); i++) {
                     if (Enemies.get(i).isIsDead()) {
                         explosions.add(new Explosion(Enemies.get(i).getX(), Enemies.get(i).getY()));
+                        powerups.add(new Powerup(Enemies.get(i).getX(), Enemies.get(i).getY()));
                         Enemies.remove(i);
                         score++;
                     } else {
