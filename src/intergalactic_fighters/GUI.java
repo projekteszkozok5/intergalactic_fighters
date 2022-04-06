@@ -97,8 +97,7 @@ public class GUI {
             }
             if(e.getKeyCode() == 32)
             {
-                GameArea.Players.get(0).moveRight();
-                GameArea.Players.get(0).setImage(new ImageIcon(this.getClass().getResource("/design/images/playershipright.png")).getImage());
+                GameArea.Players.get(0).shoot();
             }
         }
 

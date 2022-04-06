@@ -18,11 +18,11 @@ public class Player{
     protected int width;
     protected int height;
     protected Image image;
-    public Point Destination;
     private int moveX = 0;
     private int moveY = 0;
     private int bulletSpeed = 100;
     private ArrayList<Bullet> bullets;
+    private Point direction;
 
     public int getX()
     {
@@ -43,8 +43,8 @@ public class Player{
         this.width = width;
         this.height = height;
         this.image = image;
-        Destination = new Point(x,y);
         bullets = new ArrayList<>();
+        direction = new Point(0,-1);
     }
     public void loseHp(int points)
     {
@@ -58,25 +58,32 @@ public class Player{
     
     public void draw(Graphics g, int zoomLevel, int Xoffset, int Yoffset) {
         g.drawImage(image, x * zoomLevel + Xoffset, y * zoomLevel + Yoffset, width * zoomLevel, height * zoomLevel, null);
+        for (int i = 0; i < bullets.size(); i++) {
+            g.drawImage(bullets.get(i).getImg(), bullets.get(i).getStartPos().x* zoomLevel + Xoffset, bullets.get(i).getStartPos().y * zoomLevel + Yoffset, 15 * zoomLevel, 15 * zoomLevel, null);
+        }
     }
 
     public void moveForward()
     {
         moveY = -1;
+        direction = new Point(0,-1);
     }
     public void moveBackward()
     {
         moveY = 1;
+        direction = new Point(0,1);
     }
 
     public void moveRight()
     {
         moveX = 1;
+        direction = new Point(1,0);
     }
 
     public void moveLeft()
     {
         moveX = -1;
+        direction = new Point(-1,0);
     }
 
     public void setZeroY()
@@ -103,6 +110,7 @@ public class Player{
     }
     
     public void shoot(){
-        Bullet b = new Bullet(new Point(x,y), new Point(moveX,moveY), bulletSpeed, "player");
+        Bullet b = new Bullet(new Point(x+width/2-15/2,y+height/2-15/2), direction, bulletSpeed, "player");
+        bullets.add(b);
     }
 }
