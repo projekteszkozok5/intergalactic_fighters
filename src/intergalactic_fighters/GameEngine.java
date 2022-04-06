@@ -6,6 +6,7 @@
 package intergalactic_fighters;
 
 import intergalactic_fighters.backgrounds.BasicBackground;
+import intergalactic_fighters.sprites.Explosion;
 import intergalactic_fighters.sprites.Powerup;
 import intergalactic_fighters.sprites.enemies.CrazyEnemy;
 import intergalactic_fighters.sprites.enemies.EasyEnemy;
@@ -43,6 +44,7 @@ public class GameEngine extends JPanel {
     private int score = 0;
     private ArrayList<BasicBackground> backs;
     public static ArrayList<Powerup> powerups;
+    public static ArrayList<Explosion> explosions;
     private int zoomTimer = -1;
     private boolean travel = false;
     private boolean finished = false;
@@ -73,17 +75,18 @@ public class GameEngine extends JPanel {
         backs = new ArrayList<>();
         backs.add(back1);
         powerups = new ArrayList<>();
+        explosions = new ArrayList<>();
     }
-    
-    private void set(){
+
+    private void set() {
         int rand = r.nextInt(11);
         int c = 0;
         for (int i = 0; i < rand; i++) {
             Enemies.add(new CrazyEnemy("CrazyEnemy" + i, (int) (800 / zoomLevel / 2 + gridSize * i), gridSize + 10, gridSize, gridSize, EnemyShip));//"enemy"
             c++;
         }
-        for (int i = 0; i < (10-rand); i++) {
-            Enemies.add(new EasyEnemy("EasyEnemy" + i, (int) (800 / zoomLevel / 2 + gridSize * i-150), gridSize + 10, gridSize, gridSize, EnemyShip));//"enemy"
+        for (int i = 0; i < (10 - rand); i++) {
+            Enemies.add(new EasyEnemy("EasyEnemy" + i, (int) (800 / zoomLevel / 2 + gridSize * i - 150), gridSize + 10, gridSize, gridSize, EnemyShip));//"enemy"
             c++;
         }
         System.out.println(c);
@@ -116,13 +119,10 @@ public class GameEngine extends JPanel {
             Players.get(i).draw(grphcs, zoomLevel, 0, 0);
         }
         for (int i = Enemies.size() - 1; i >= 0; i--) {
-            if (Enemies.get(i).isIsDead()) {
-                powerups.add(new Powerup(Enemies.get(i).getX(), Enemies.get(i).getY()));
-                Enemies.remove(i);
-                score++;
-            } else {
-                Enemies.get(i).draw(grphcs, zoomLevel, 0, 0);
-            }
+            Enemies.get(i).draw(grphcs, zoomLevel, 0, 0);
+        }
+        for (int i = explosions.size() - 1; i >= 0; i--) {
+            explosions.get(i).draw(grphcs, zoomLevel);
         }
 
         grphcs.setFont(new Font("TimesRoman", Font.PLAIN, 20));
@@ -151,29 +151,42 @@ public class GameEngine extends JPanel {
                     Players.get(i).move();
                 }
                 for (int i = 0; i < Enemies.size(); i++) {
-                    Enemies.get(i).move();
+                    if (Enemies.get(i).isIsDead()) {
+                        explosions.add(new Explosion(Enemies.get(i).getX(), Enemies.get(i).getY()));
+                        Enemies.remove(i);
+                        score++;
+                    } else {
+                        Enemies.get(i).move();
+                    }
                 }
                 for (int i = 0; i < powerups.size(); i++) {
                     powerups.get(i).step();
                 }
+                for (int i = 0; i < explosions.size(); i++) {
+                    explosions.get(i).nextFrame();
+                    if(explosions.get(i).getPicPos() > 12)explosions.remove(i);
+                }
                 if (travel) {
                     zoomTimer = 200;
                     travel = false;
-                    int random = r.nextInt(3)+3;
+                    int random = r.nextInt(3) + 3;
                     Enemies.clear();
                     score = 0;
                     for (int i = 0; i < random; i++) {
-                        Powerup p = new Powerup(r.nextInt(500)+50, 0);
+                        Powerup p = new Powerup(r.nextInt(500) + 50, 0);
                         powerups.add(p);
                     }
                 }
                 if (zoomTimer > 0) {
                     zoomTimer--;
                     for (int i = 0; i < backs.size(); i++) {
-                        if(zoomTimer > 100) backs.get(i).setSpeed((200-zoomTimer)/2);
-                        else backs.get(i).setSpeed(zoomTimer/2);
+                        if (zoomTimer > 100) {
+                            backs.get(i).setSpeed((200 - zoomTimer) / 2);
+                        } else {
+                            backs.get(i).setSpeed(zoomTimer / 2);
+                        }
                     }
-                } else if(zoomTimer == 0) {
+                } else if (zoomTimer == 0) {
                     set();
                     for (int i = 0; i < backs.size(); i++) {
                         backs.get(i).setSpeed(1);
