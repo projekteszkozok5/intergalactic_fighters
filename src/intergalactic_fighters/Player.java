@@ -20,9 +20,9 @@ public class Player{
     protected Image image;
     private int moveX = 0;
     private int moveY = 0;
-    private int bulletSpeed = 100;
-    private ArrayList<Bullet> bullets;
-    private Point direction;
+    protected int bulletSpeed = 7;
+    protected ArrayList<Bullet> bullets;
+    protected Point direction;
 
     public int getX()
     {

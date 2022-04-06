@@ -34,6 +34,10 @@ public class Bullet {
             if(direction.x == 0) img = new ImageIcon(this.getClass().getResource("/design/images/bullet.png")).getImage();
             else img = new ImageIcon(this.getClass().getResource("/design/images/bullet_side.png")).getImage();
         }
+        else{
+            if(direction.x == 0) img = new ImageIcon(this.getClass().getResource("/design/images/enemies/enemy_bullet.png")).getImage();
+            else img = new ImageIcon(this.getClass().getResource("/design/images/enemies/enemy_bullet_side.png")).getImage();
+        }
         timer = new Timer(25, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -51,8 +55,8 @@ public class Bullet {
     }
     
     private void move(){
-        if(direction.x == 0) startPos.y+=direction.y*7;
-        else startPos.x+=direction.x*7;
+        if(direction.x == 0) startPos.y+=direction.y*speed;
+        else startPos.x+=direction.x*speed;
     }
     
 }
