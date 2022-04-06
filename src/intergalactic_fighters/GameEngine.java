@@ -48,7 +48,9 @@ public class GameEngine extends JPanel {
     private int zoomTimer = -1;
     private boolean travel = false;
     private boolean finished = false;
+    private boolean gameover = false;
     private Random r = new Random();
+    private int level = 0;
 
     public void addScore(int score) {
         this.score += score;
@@ -79,13 +81,13 @@ public class GameEngine extends JPanel {
     }
 
     private void set() {
-        int rand = r.nextInt(11);
+        int rand = r.nextInt(11+(level*2));
         int c = 0;
         for (int i = 0; i < rand; i++) {
             Enemies.add(new CrazyEnemy("CrazyEnemy" + i, (int) (800 / zoomLevel / 2 + gridSize * i), gridSize + 10, gridSize, gridSize, EnemyShip));//"enemy"
             c++;
         }
-        for (int i = 0; i < (10 - rand); i++) {
+        for (int i = 0; i < (10+(level*2) - rand); i++) {
             Enemies.add(new EasyEnemy("EasyEnemy" + i, (int) (800 / zoomLevel / 2 + gridSize * i - 150), gridSize + 10, gridSize, gridSize, EnemyShip));//"enemy"
             c++;
         }
@@ -97,9 +99,10 @@ public class GameEngine extends JPanel {
         super.paintComponent(grphcs);
         setBackground(Color.BLACK);//hatter
         for (int i = 0; i < backs.size(); i++) {
-            if (score == 10) {
+            if (score == 10+(level*2)) {
                 travel = true;
                 score = 0;
+                level++;
             }
             backs.get(i).step();
             grphcs.drawImage(backs.get(i).getImg(), 0, (int) (backs.get(i).getPosY()), (int) (800), (int) (1400), null);
@@ -116,7 +119,7 @@ public class GameEngine extends JPanel {
             powerups.get(i).draw(grphcs, zoomLevel);
         }
         for (int i = Players.size() - 1; i >= 0; i--) {
-            Players.get(i).draw(grphcs, zoomLevel, 0, 0);
+            if(!Players.get(i).isDead)Players.get(i).draw(grphcs, zoomLevel, 0, 0);
         }
         for (int i = Enemies.size() - 1; i >= 0; i--) {
             Enemies.get(i).draw(grphcs, zoomLevel, 0, 0);
@@ -140,6 +143,13 @@ public class GameEngine extends JPanel {
         grphcs.setFont(new Font("TimesRoman", Font.PLAIN, 20));
         grphcs.setColor(Color.green);
         grphcs.drawString(Players.get(0).getWhatCollected(), 320, 580);
+        if(gameover){
+        grphcs.setFont(new Font("TimesRoman", Font.PLAIN, 125));
+        grphcs.setColor(Color.red);
+        grphcs.drawString("GAME OVER", 25, 330);
+        grphcs.setFont(new Font("TimesRoman", Font.PLAIN, 30));
+        grphcs.drawString("Cleared levels: "+Integer.toString(level), 300, 370);
+        }
     }
 
     class NewFrameListener implements ActionListener {
@@ -148,7 +158,13 @@ public class GameEngine extends JPanel {
         public void actionPerformed(ActionEvent ae) {
             try {
                 for (int i = 0; i < Players.size(); i++) {
-                    Players.get(i).move();
+                    if(Players.get(i).isDead && gameover == false) {
+                        gameover = true;
+                        Enemies.clear();
+                        powerups.clear();
+                        explosions.add(new Explosion(Players.get(i).getX(), Players.get(i).getY()));
+                    }
+                    else Players.get(i).move();
                 }
                 for (int i = 0; i < Enemies.size(); i++) {
                     if (Enemies.get(i).isIsDead()) {
