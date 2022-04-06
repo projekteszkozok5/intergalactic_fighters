@@ -51,5 +51,9 @@ public class BasicBackground {
     public void setLive(boolean live) {
         this.live = live;
     }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
     
 }

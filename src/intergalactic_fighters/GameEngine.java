@@ -9,6 +9,7 @@ import intergalactic_fighters.backgrounds.BasicBackground;
 import intergalactic_fighters.sprites.enemies.CrazyEnemy;
 import intergalactic_fighters.sprites.enemies.EasyEnemy;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -109,6 +110,7 @@ public class GameEngine extends JPanel {
             Walls.get(i).draw(grphcs, zoomLevel, Xoffset, Yoffset);
         }*/
         for (int i = 0; i < backs.size(); i++) {
+            if(score == 10) backs.get(i).setSpeed(20);
             backs.get(i).step();
             grphcs.drawImage(backs.get(i).getImg(), 0, (int)(backs.get(i).getPosY()), (int)(800), (int)(1400), null);
         }
@@ -132,9 +134,11 @@ public class GameEngine extends JPanel {
             else Enemies.get(i).draw(grphcs, zoomLevel, Xoffset, Yoffset);
         }
         
-        
-        grphcs.drawString("Health: " + Integer.toString(Players.get(PlayerNumber-1).getHp()), 10, 20);
-        grphcs.drawString("Score: " + Integer.toString(score) + "/" + Integer.toString(20), 100, 20);
+        grphcs.setFont(new Font("TimesRoman", Font.PLAIN, 20)); 
+        grphcs.setColor(Color.red);
+        grphcs.drawString("Health: " + Integer.toString(Players.get(PlayerNumber-1).getHp()), 680, 580);
+        grphcs.setFont(new Font("TimesRoman", Font.PLAIN, 30)); 
+        grphcs.drawString("Score: " + Integer.toString(score) + "/" + Integer.toString(10), 320, 40);
     }
     
     class NewFrameListener implements ActionListener {
