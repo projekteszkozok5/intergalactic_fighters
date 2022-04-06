@@ -23,6 +23,7 @@ public class Player{
     protected int bulletSpeed = 7;
     protected ArrayList<Bullet> bullets;
     protected Point direction;
+    protected boolean isDead = false;
 
     public int getX()
     {
@@ -32,6 +33,10 @@ public class Player{
     public int getY()
     {
         return y;
+    }
+
+    public int getWidth() {
+        return width;
     }
 
     public Player(String name, int x, int y, int width, int height, Image image)
@@ -49,17 +54,24 @@ public class Player{
     public void loseHp(int points)
     {
         HP = HP - points;
+        if(HP <= 0) isDead = true;
     }
     
     public int getHp()
     {
         return HP;
     }
+
+    public boolean isIsDead() {
+        return isDead;
+    }
+    
     
     public void draw(Graphics g, int zoomLevel, int Xoffset, int Yoffset) {
         g.drawImage(image, x * zoomLevel + Xoffset, y * zoomLevel + Yoffset, width * zoomLevel, height * zoomLevel, null);
         for (int i = 0; i < bullets.size(); i++) {
-            g.drawImage(bullets.get(i).getImg(), bullets.get(i).getStartPos().x* zoomLevel + Xoffset, bullets.get(i).getStartPos().y * zoomLevel + Yoffset, 15 * zoomLevel, 15 * zoomLevel, null);
+            if(bullets.get(i).isIsDead()) bullets.remove(i);
+            else g.drawImage(bullets.get(i).getImg(), bullets.get(i).getStartPos().x* zoomLevel + Xoffset, bullets.get(i).getStartPos().y * zoomLevel + Yoffset, 15 * zoomLevel, 15 * zoomLevel, null);
         }
     }
 

@@ -119,7 +119,9 @@ public class GUI {
         timer = new Timer(100, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                GameArea.Enemies.get(0).movement();
+                for (int i = 0; i < GameArea.Enemies.size(); i++) {
+                    GameArea.Enemies.get(i).movement();
+                }
             }});
         timer.start();
     }

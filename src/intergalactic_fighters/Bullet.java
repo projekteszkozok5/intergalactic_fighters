@@ -24,6 +24,7 @@ public class Bullet {
     private Image img;
     private int size=15;
     private Timer timer;
+    private boolean isDead = false;
 
     public Bullet(Point startPos, Point direction, double speed, String owner) {
         this.startPos = startPos;
@@ -41,7 +42,10 @@ public class Bullet {
         timer = new Timer(25, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                move();
+                if(!isDead){
+                    move();
+                    detectCollision();
+                }
             }});
         timer.start();
     }
@@ -58,5 +62,33 @@ public class Bullet {
         if(direction.x == 0) startPos.y+=direction.y*speed;
         else startPos.x+=direction.x*speed;
     }
+    
+    private void detectCollision(){
+        if(owner == "player"){
+            for (int i = 0; i < GameEngine.Enemies.size(); i++) {
+                if(inBox(GameEngine.Enemies.get(i).getX(),GameEngine.Enemies.get(i).getY(),GameEngine.Enemies.get(i).getWidth())){
+                    GameEngine.Enemies.get(i).loseHp(100);
+                    isDead = true;
+                }
+            }
+        }
+        else{
+            for (int i = 0; i < GameEngine.Players.size(); i++) {
+                if(inBox(GameEngine.Players.get(i).getX(),GameEngine.Players.get(i).getY(),GameEngine.Players.get(i).getWidth())){
+                    GameEngine.Players.get(i).loseHp(20);
+                    isDead = true;
+                }
+            }
+        }
+    }
+    
+    private boolean inBox(int x, int y, int boxSize){
+        return (startPos.x >= x && startPos.x <= x+boxSize && startPos.y >= y && startPos.y <= y+boxSize);
+    }
+
+    public boolean isIsDead() {
+        return isDead;
+    }
+    
     
 }

@@ -92,7 +92,10 @@ public class GameEngine extends JPanel {
         }
         for (int i = Players.size() - 1; i >= 0 ; i--) {
             Players.get(i).draw(grphcs, zoomLevel, Xoffset, Yoffset);
-            Enemies.get(i).draw(grphcs, zoomLevel, Xoffset, Yoffset);
+        }
+        for (int i = Enemies.size() - 1; i >= 0 ; i--) {
+            if(Enemies.get(i).isIsDead()) Enemies.remove(i);
+            else Enemies.get(i).draw(grphcs, zoomLevel, Xoffset, Yoffset);
         }
         
         grphcs.drawString("Health: " + Integer.toString(Players.get(PlayerNumber-1).getHp()), 10, 20);
@@ -107,6 +110,8 @@ public class GameEngine extends JPanel {
             {
                 for (int i = 0; i < Players.size(); i++) {
                     Players.get(i).move(motionSpeed);
+                }
+                for (int i = 0; i < Enemies.size(); i++) {
                     Enemies.get(i).move(motionSpeed);
                 }
                 
