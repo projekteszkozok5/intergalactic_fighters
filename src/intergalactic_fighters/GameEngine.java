@@ -76,13 +76,17 @@ public class GameEngine extends JPanel {
     }
     
     private void set(){
-        int rand = r.nextInt(10);
-        for (int i = 0; i <= rand; i++) {
+        int rand = r.nextInt(11);
+        int c = 0;
+        for (int i = 0; i < rand; i++) {
             Enemies.add(new CrazyEnemy("CrazyEnemy" + i, (int) (800 / zoomLevel / 2 + gridSize * i), gridSize + 10, gridSize, gridSize, EnemyShip));//"enemy"
+            c++;
         }
-        for (int i = 0; i <= (10-rand); i++) {
-            Enemies.add(new EasyEnemy("EasyEnemy" + i, (int) (800 / zoomLevel / 2 + gridSize * i), gridSize + 10, gridSize, gridSize, EnemyShip));//"enemy"
+        for (int i = 0; i < (10-rand); i++) {
+            Enemies.add(new EasyEnemy("EasyEnemy" + i, (int) (800 / zoomLevel / 2 + gridSize * i-150), gridSize + 10, gridSize, gridSize, EnemyShip));//"enemy"
+            c++;
         }
+        System.out.println(c);
     }
 
     @Override
@@ -156,6 +160,8 @@ public class GameEngine extends JPanel {
                     zoomTimer = 200;
                     travel = false;
                     int random = r.nextInt(3)+3;
+                    Enemies.clear();
+                    score = 0;
                     for (int i = 0; i < random; i++) {
                         Powerup p = new Powerup(r.nextInt(500)+50, 0);
                         powerups.add(p);
