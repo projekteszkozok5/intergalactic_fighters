@@ -6,6 +6,7 @@
 package intergalactic_fighters;
 
 import intergalactic_fighters.backgrounds.BasicBackground;
+import intergalactic_fighters.sprites.Powerup;
 import intergalactic_fighters.sprites.enemies.CrazyEnemy;
 import intergalactic_fighters.sprites.enemies.EasyEnemy;
 import java.awt.Color;
@@ -43,13 +44,10 @@ public class GameEngine extends JPanel {
     private final int FPS = 60;
     private int gridSize = 40;//segedhalo racsmerete
     public static double zoomLevel = 1.5;//zoomlevel szamítson az eltolasnal? nem.
-    private int cameraMoveSpeed = 3;//kamera mozgasi sebessege
-    private int Xoffset = 0;//kamera X iranyu kimozdulasa
-    private int Yoffset = 0;//kamera Y iranyu kimozdulasa
-    private int motionSpeed = 3; //pixel jump/tick
     private int PlayerNumber;
     private int score = 0;
     private ArrayList<BasicBackground> backs;
+    public static ArrayList<Powerup> powerups;
 
     public void addScore(int score) {
         this.score += score;
@@ -86,6 +84,7 @@ public class GameEngine extends JPanel {
         back1.setPosY(-800);
         backs = new ArrayList<>();
         backs.add(back1);
+        powerups = new ArrayList<>();
     }
 
     public void addWall( int x, int y, int width, int height, Image image){
@@ -122,16 +121,19 @@ public class GameEngine extends JPanel {
             backs.remove(0);
         }
         
-        
+        for (int i = powerups.size() - 1; i >= 0 ; i--) {
+            powerups.get(i).draw(grphcs, zoomLevel);
+        }
         for (int i = Players.size() - 1; i >= 0 ; i--) {
-            Players.get(i).draw(grphcs, zoomLevel, Xoffset, Yoffset);
+            Players.get(i).draw(grphcs, zoomLevel, 0, 0);
         }
         for (int i = Enemies.size() - 1; i >= 0 ; i--) {
             if(Enemies.get(i).isIsDead()){
+                powerups.add(new Powerup(Enemies.get(i).getX(),Enemies.get(i).getY()));
                 Enemies.remove(i);
                 score++;
             }
-            else Enemies.get(i).draw(grphcs, zoomLevel, Xoffset, Yoffset);
+            else Enemies.get(i).draw(grphcs, zoomLevel, 0, 0);
         }
         
         grphcs.setFont(new Font("TimesRoman", Font.PLAIN, 20)); 
@@ -140,11 +142,15 @@ public class GameEngine extends JPanel {
         grphcs.fillRect (0, 550, 200, 50);
         grphcs.setColor(Color.red);
         grphcs.drawString("HP:", 560, 580);
-        grphcs.fillRect (605, 555, (int)(190*(Players.get(0).getHp()/100.0f)), 40);
+        grphcs.fillRect (605, 555, (int)(190*(Players.get(0).getHp()/Players.get(0).getMaxHP())), 40);
         grphcs.setColor(Color.blue);
         grphcs.fillRect (5, 555, (int)(190*(Players.get(0).getBullets().size()/(double)Players.get(0).getMaxBullets())), 40);
         grphcs.setFont(new Font("TimesRoman", Font.PLAIN, 30)); 
+        grphcs.setColor(Color.red);
         grphcs.drawString("Score: " + Integer.toString(score) + "/" + Integer.toString(10), 320, 40);
+        grphcs.setFont(new Font("TimesRoman", Font.PLAIN, 20)); 
+        grphcs.setColor(Color.green);
+        grphcs.drawString(Players.get(0).getWhatCollected(), 320, 580);
     }
     
     class NewFrameListener implements ActionListener {
@@ -154,10 +160,13 @@ public class GameEngine extends JPanel {
             try
             {
                 for (int i = 0; i < Players.size(); i++) {
-                    Players.get(i).move(motionSpeed);
+                    Players.get(i).move();
                 }
                 for (int i = 0; i < Enemies.size(); i++) {
-                    Enemies.get(i).move(motionSpeed);
+                    Enemies.get(i).move();
+                }
+                for (int i = 0; i < powerups.size(); i++) {
+                    powerups.get(i).step();
                 }
                 
                 //cameracorrection                                                        |      zoomlál elcsuszik.    |    paros szamu racs van ezzel kozepre helyzem

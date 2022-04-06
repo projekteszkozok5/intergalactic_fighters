@@ -30,7 +30,7 @@ public class EasyEnemy extends Enemy{
     @Override
     public void movement(){
         if(whenshoot == 0) {
-            Bullet b = new Bullet(new Point(x+width/2-15/2,y+height/2-15/2), new Point(0,1), bulletSpeed, "enemy");
+            Bullet b = new Bullet(new Point(x+width/2-15/2,y+height/2-15/2), new Point(0,1), getBulletSpeed(), "enemy");
             bullets.add(b);
             whenshoot=(r.nextInt(((100-(10*level))-1)+1)+1);
         }

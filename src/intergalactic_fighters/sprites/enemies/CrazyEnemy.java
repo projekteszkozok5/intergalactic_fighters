@@ -44,7 +44,7 @@ public class CrazyEnemy extends Enemy {
                 setImage(new ImageIcon(this.getClass().getResource("/design/images/enemies/enemyshipleft.png")).getImage());
                 break;
             case 5:
-                Bullet b = new Bullet(new Point(x+width/2-15/2,y+height/2-15/2), direction, bulletSpeed, "enemy");
+                Bullet b = new Bullet(new Point(x+width/2-15/2,y+height/2-15/2), direction, getBulletSpeed(), "enemy");
                 bullets.add(b);
                 break;
         }
