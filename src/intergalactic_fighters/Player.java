@@ -24,6 +24,7 @@ public class Player{
     protected ArrayList<Bullet> bullets;
     protected Point direction;
     protected boolean isDead = false;
+    protected boolean collided = false;
 
     public int getX()
     {
@@ -67,11 +68,15 @@ public class Player{
     }
     
     
-    public void draw(Graphics g, int zoomLevel, int Xoffset, int Yoffset) {
-        g.drawImage(image, x * zoomLevel + Xoffset, y * zoomLevel + Yoffset, width * zoomLevel, height * zoomLevel, null);
+    public void draw(Graphics g, double zoomLevel, int Xoffset, int Yoffset) {
+        g.drawImage(image, (int)(x * zoomLevel + Xoffset), (int)(y * zoomLevel + Yoffset), (int)(width * zoomLevel), (int)(height * zoomLevel), null);
         for (int i = 0; i < bullets.size(); i++) {
             if(bullets.get(i).isIsDead()) bullets.remove(i);
-            else g.drawImage(bullets.get(i).getImg(), bullets.get(i).getStartPos().x* zoomLevel + Xoffset, bullets.get(i).getStartPos().y * zoomLevel + Yoffset, 15 * zoomLevel, 15 * zoomLevel, null);
+            else g.drawImage(bullets.get(i).getImg(),
+                    (int)(bullets.get(i).getStartPos().x* zoomLevel + Xoffset),
+                    (int)(bullets.get(i).getStartPos().y * zoomLevel + Yoffset),
+                    (int)(15 * zoomLevel),
+                    (int)(15 * zoomLevel), null);
         }
     }
 
@@ -110,8 +115,10 @@ public class Player{
 
     public void move(int speed)
     {
-        x += moveX * speed;
-        y += moveY * speed;
+        if(x + moveX * speed > 0 && x + moveX * speed < 800/GameEngine.zoomLevel-width) x += moveX * speed;
+        else collided = true;
+        if(y + moveY * speed > 0 && y + moveY * speed < 600/GameEngine.zoomLevel-height) y += moveY * speed;
+        else collided = true;
     }
 
     public void setImage(Image image){
@@ -124,5 +131,6 @@ public class Player{
     public void shoot(){
         Bullet b = new Bullet(new Point(x+width/2-15/2,y+height/2-15/2), direction, bulletSpeed, "player");
         bullets.add(b);
+        System.out.println(getX()+","+getY());
     }
 }

@@ -5,6 +5,8 @@
  */
 package intergalactic_fighters;
 
+import intergalactic_fighters.sprites.enemies.CrazyEnemy;
+import intergalactic_fighters.sprites.enemies.EasyEnemy;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -38,12 +40,17 @@ public class GameEngine extends JPanel {
     private Timer newFrameTimer;
     private final int FPS = 60;
     private int gridSize = 40;//segedhalo racsmerete
-    public int zoomLevel = 2;//zoomlevel szamítson az eltolasnal? nem.
+    public static double zoomLevel = 1.5;//zoomlevel szamítson az eltolasnal? nem.
     private int cameraMoveSpeed = 3;//kamera mozgasi sebessege
     private int Xoffset = 0;//kamera X iranyu kimozdulasa
     private int Yoffset = 0;//kamera Y iranyu kimozdulasa
     private int motionSpeed = 3; //pixel jump/tick
     private int PlayerNumber;
+    private int score = 0;
+
+    public void addScore(int score) {
+        this.score += score;
+    }
     
     public GameEngine(int PlayerNumber) {
         super();
@@ -61,12 +68,17 @@ public class GameEngine extends JPanel {
         PurpleImage = new ImageIcon("design/images/purple.png").getImage();
         BlackCircle = new ImageIcon(this.getClass().getResource("/design/images/circle.png")).getImage();
         PlayerShip = new ImageIcon(this.getClass().getResource("/design/images/playership.png")).getImage();
-        EnemyShip = new ImageIcon(this.getClass().getResource("/design/images/enemyship.png")).getImage();
+        EnemyShip = new ImageIcon(this.getClass().getResource("/design/images/enemies/enemyship.png")).getImage();
         Walls = new ArrayList<>();
         Players = new ArrayList<>();
         Enemies = new ArrayList<>();
-        Players.add(new Player("Player1", gridSize, gridSize, gridSize, gridSize, PlayerShip));//player
-        Enemies.add(new Enemy("Enemy1", gridSize+10, gridSize+10, gridSize, gridSize, EnemyShip));//"enemy"
+        Players.add(new Player("Player1", (int)(800/zoomLevel/2-gridSize/2), (int)(500/zoomLevel-gridSize/2), gridSize, gridSize, PlayerShip));//player
+        for (int i = 0; i < 5; i++) {
+            Enemies.add(new CrazyEnemy("CrazyEnemy"+i, (int)(800/zoomLevel/2+gridSize*i), gridSize+10, gridSize, gridSize, EnemyShip));//"enemy"
+        }
+        for (int i = 0; i < 5; i++) {
+            Enemies.add(new EasyEnemy("EasyEnemy"+i, (int)(800/zoomLevel/2+gridSize*i), gridSize+10, gridSize, gridSize, EnemyShip));//"enemy"
+        }
     }
 
     public void addWall( int x, int y, int width, int height, Image image){
@@ -80,8 +92,8 @@ public class GameEngine extends JPanel {
     @Override
     protected void paintComponent(Graphics grphcs) {
         super.paintComponent(grphcs);
-        setBackground(Color.LIGHT_GRAY);//hatter
-        for (int i = 0; i < (600 / gridSize) + 1; i++) {//vizszintes seged vonalak
+        setBackground(Color.BLACK);//hatter
+        /*for (int i = 0; i < (600 / gridSize) + 1; i++) {//vizszintes seged vonalak
             grphcs.drawLine(0 + Xoffset, i * gridSize * zoomLevel + Yoffset, 800 * zoomLevel + Xoffset, i * gridSize * zoomLevel  + Yoffset);
         }
         for (int i = 0; i < (800 / gridSize) + 1; i++) {//fuggoleges seged vonalak
@@ -89,17 +101,20 @@ public class GameEngine extends JPanel {
         }
         for (int i = Walls.size() - 1; i >= 0 ; i--) {
             Walls.get(i).draw(grphcs, zoomLevel, Xoffset, Yoffset);
-        }
+        }*/
         for (int i = Players.size() - 1; i >= 0 ; i--) {
             Players.get(i).draw(grphcs, zoomLevel, Xoffset, Yoffset);
         }
         for (int i = Enemies.size() - 1; i >= 0 ; i--) {
-            if(Enemies.get(i).isIsDead()) Enemies.remove(i);
+            if(Enemies.get(i).isIsDead()){
+                Enemies.remove(i);
+                score++;
+            }
             else Enemies.get(i).draw(grphcs, zoomLevel, Xoffset, Yoffset);
         }
         
         grphcs.drawString("Health: " + Integer.toString(Players.get(PlayerNumber-1).getHp()), 10, 20);
-        grphcs.drawString("Capacity: " + Integer.toString(0) + "/" + Integer.toString(20), 100, 20);
+        grphcs.drawString("Score: " + Integer.toString(score) + "/" + Integer.toString(20), 100, 20);
     }
     
     class NewFrameListener implements ActionListener {
@@ -116,8 +131,8 @@ public class GameEngine extends JPanel {
                 }
                 
                 //cameracorrection                                                        |      zoomlál elcsuszik.    |    paros szamu racs van ezzel kozepre helyzem
-                Xoffset = 400 / zoomLevel - Players.get(PlayerNumber-1).getX() * zoomLevel + gridSize * (zoomLevel + 1) + gridSize / 2;
-                Yoffset = 300 / zoomLevel - Players.get(PlayerNumber-1).getY() * zoomLevel + gridSize * (zoomLevel + 1) - gridSize / 2;
+                //Xoffset = 400 / zoomLevel - Players.get(PlayerNumber-1).getX() * zoomLevel + gridSize * (zoomLevel + 1) + gridSize / 2;
+                //Yoffset = 300 / zoomLevel - Players.get(PlayerNumber-1).getY() * zoomLevel + gridSize * (zoomLevel + 1) - gridSize / 2;
                 repaint();
                 }
             catch(NullPointerException e)//ezt meg meg kellene oldani.
