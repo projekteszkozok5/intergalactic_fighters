@@ -46,7 +46,7 @@ public class Powerup {
         this.x = x;
         this.y = y;
         image = new ImageIcon(this.getClass().getResource("/images/powerup.png")).getImage();
-        powerups[index] = 1;
+        powerups[index-1] = 1;
         if(index == 1) whatisit = "Maximum HP +2";
         else if(index == 2) whatisit = "HP visszatöltési sebesség +1";
         else if(index == 3) whatisit = "Sebesség +1";

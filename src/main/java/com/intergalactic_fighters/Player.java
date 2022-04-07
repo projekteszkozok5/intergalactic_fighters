@@ -140,6 +140,10 @@ public class Player{
         if(name=="Player1")collect();
     }
 
+    public void setCooldown(int cooldown) {
+        this.cooldown = cooldown;
+    }
+
     public void setImage(Image image){
         this.image=image;
     }
@@ -170,14 +174,18 @@ public class Player{
     public String getWhatCollected() {
         return whatCollected;
     }
+
+    public double getSpeed() {
+        return speed;
+    }
     
-    private void collect(){
+    public void collect(){
         for (int i = 0; i < GameEngine.powerups.size(); i++) {
             if(inBox(GameEngine.powerups.get(i).getX(),GameEngine.powerups.get(i).getY())){
                 maxHP+=GameEngine.powerups.get(i).getPowerups()[0]*5;
                 HealPerSecond+=GameEngine.powerups.get(i).getPowerups()[1];
-                speed+=GameEngine.powerups.get(i).getPowerups()[2]/2;
-                bulletSpeed+=GameEngine.powerups.get(i).getPowerups()[3]/2;
+                speed+=GameEngine.powerups.get(i).getPowerups()[2]/2.0;
+                bulletSpeed+=GameEngine.powerups.get(i).getPowerups()[3]/2.0;
                 maxBullets+=GameEngine.powerups.get(i).getPowerups()[4];
                 whatCollected = GameEngine.powerups.get(i).getWhatisit();
                 cooldown = 15;
@@ -186,7 +194,7 @@ public class Player{
         }
     }
     
-    private boolean inBox(int x0, int y0){
+    public boolean inBox(int x0, int y0){
         return (x0 >= x && x0 <= x+width && y0 >= y && y0 <= y+width);
     }
 }
