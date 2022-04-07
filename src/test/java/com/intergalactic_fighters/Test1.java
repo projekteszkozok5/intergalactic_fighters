@@ -1,13 +1,14 @@
 package com.intergalactic_fighters;
 
-import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class Test1 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+public class Test1
 {
     static GameEngine g = new GameEngine(1);
-    
+
     @Test
     public void shouldAnswerWithTrue()
     {
