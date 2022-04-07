@@ -2,11 +2,21 @@ version: 2.1
 
 jobs:
   build:
+    docker:
+      - image: cimg/openjdk:17.0.1
+        auth:
+          username: projeszk5
+          password: KorteAlmaMacska45
     steps:
       - checkout
       - run: mvn clean install
 
   test:
+    docker:
+      - image: cimg/openjdk:17.0.1
+        auth:
+          username: projeszk5
+          password: KorteAlmaMacska45
     steps:
       - checkout
       - run: mvn test
