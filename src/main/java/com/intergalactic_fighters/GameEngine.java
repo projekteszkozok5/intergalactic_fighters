@@ -42,7 +42,7 @@ public class GameEngine extends JPanel {
     public static double zoomLevel = 1.5;//zoomlevel szamítson az eltolasnal? nem.
     private int PlayerNumber;
     private int score = 0;
-    private ArrayList<BasicBackground> backs;
+    public static ArrayList<BasicBackground> backs;
     public static ArrayList<Powerup> powerups;
     public static ArrayList<Explosion> explosions;
     private int zoomTimer = -1;

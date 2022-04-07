@@ -38,6 +38,19 @@ public class GUI {
             }
         });
         
+        JMenuItem newMenuItem = new JMenuItem("Új játék");
+        gameMenu.add(newMenuItem);
+        newMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                GameArea.Enemies.clear();
+                GameArea.Players.clear();
+                GameArea.powerups.clear();
+                GameArea.backs.clear();
+                GameArea = new GameEngine(1);
+            }
+        });
+        
         frame.addKeyListener(new MoveKeyListener());
 
         //GameArea.addKeyListener(new MoveKeyListener());
