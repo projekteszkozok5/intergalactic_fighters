@@ -82,17 +82,16 @@ public class GameEngine extends JPanel {
     }
 
     private void set() {
-        int rand = r.nextInt(11+(level*2));
+        int rand = r.nextInt(11 + (level * 2));
         int c = 0;
         for (int i = 0; i < rand; i++) {
             Enemies.add(new CrazyEnemy("CrazyEnemy" + i, (int) (800 / zoomLevel / 2 + gridSize * i), gridSize + 10, gridSize, gridSize, EnemyShip));//"enemy"
             c++;
         }
-        for (int i = 0; i < ((10+(level*2)) - rand); i++) {
+        for (int i = 0; i < ((10 + (level * 2)) - rand); i++) {
             Enemies.add(new EasyEnemy("EasyEnemy" + i, (int) (800 / zoomLevel / 2 + gridSize * i - 150), gridSize + 10, gridSize, gridSize, EnemyShip));//"enemy"
             c++;
         }
-        System.out.println(c);
     }
 
     @Override
@@ -100,7 +99,7 @@ public class GameEngine extends JPanel {
         super.paintComponent(grphcs);
         setBackground(Color.BLACK);//hatter
         for (int i = 0; i < backs.size(); i++) {
-            if (score == 10+(level*2)) {
+            if (score == 10 + (level * 2)) {
                 travel = true;
                 score = 0;
                 level++;
@@ -120,7 +119,9 @@ public class GameEngine extends JPanel {
             powerups.get(i).draw(grphcs, zoomLevel);
         }
         for (int i = Players.size() - 1; i >= 0; i--) {
-            if(!Players.get(i).isDead)Players.get(i).draw(grphcs, zoomLevel, 0, 0);
+            if (!Players.get(i).isDead) {
+                Players.get(i).draw(grphcs, zoomLevel, 0, 0);
+            }
         }
         for (int i = Enemies.size() - 1; i >= 0; i--) {
             Enemies.get(i).draw(grphcs, zoomLevel, 0, 0);
@@ -140,16 +141,16 @@ public class GameEngine extends JPanel {
         grphcs.fillRect(5, 555, (int) (190 * (Players.get(0).getBullets().size() / (double) Players.get(0).getMaxBullets())), 40);
         grphcs.setFont(new Font("TimesRoman", Font.PLAIN, 30));
         grphcs.setColor(Color.red);
-        grphcs.drawString("Score: " + Integer.toString(score) + "/" + Integer.toString(10+(level*2)), 320, 40);
+        grphcs.drawString("Score: " + Integer.toString(score) + "/" + Integer.toString(10 + (level * 2)), 320, 40);
         grphcs.setFont(new Font("TimesRoman", Font.PLAIN, 20));
         grphcs.setColor(Color.green);
         grphcs.drawString(Players.get(0).getWhatCollected(), 320, 580);
-        if(gameover){
-        grphcs.setFont(new Font("TimesRoman", Font.PLAIN, 125));
-        grphcs.setColor(Color.red);
-        grphcs.drawString("GAME OVER", 25, 330);
-        grphcs.setFont(new Font("TimesRoman", Font.PLAIN, 30));
-        grphcs.drawString("Cleared levels: "+Integer.toString(level), 300, 370);
+        if (gameover) {
+            grphcs.setFont(new Font("TimesRoman", Font.PLAIN, 125));
+            grphcs.setColor(Color.red);
+            grphcs.drawString("GAME OVER", 25, 330);
+            grphcs.setFont(new Font("TimesRoman", Font.PLAIN, 30));
+            grphcs.drawString("Cleared levels: " + Integer.toString(level), 300, 370);
         }
     }
 
@@ -159,20 +160,18 @@ public class GameEngine extends JPanel {
         public void actionPerformed(ActionEvent ae) {
             try {
                 for (int i = 0; i < Players.size(); i++) {
-                    if(Players.get(i).isDead && gameover == false) {
+                    if (Players.get(i).isDead && gameover == false) {
                         gameover = true;
                         Enemies.clear();
                         powerups.clear();
                         explosions.add(new Explosion(Players.get(i).getX(), Players.get(i).getY()));
+                    } else {
+                        Players.get(i).move();
                     }
-                    else Players.get(i).move();
                 }
                 for (int i = 0; i < Enemies.size(); i++) {
                     if (Enemies.get(i).isIsDead()) {
-                        explosions.add(new Explosion(Enemies.get(i).getX(), Enemies.get(i).getY()));
-                        powerups.add(new Powerup(Enemies.get(i).getX(), Enemies.get(i).getY()));
-                        Enemies.remove(i);
-                        score++;
+                        enemyDie(i);
                     } else {
                         Enemies.get(i).move();
                     }
@@ -182,7 +181,9 @@ public class GameEngine extends JPanel {
                 }
                 for (int i = 0; i < explosions.size(); i++) {
                     explosions.get(i).nextFrame();
-                    if(explosions.get(i).getPicPos() > 12)explosions.remove(i);
+                    if (explosions.get(i).getPicPos() > 12) {
+                        explosions.remove(i);
+                    }
                 }
                 if (travel) {
                     zoomTimer = 200;
@@ -214,10 +215,37 @@ public class GameEngine extends JPanel {
                 repaint();
             } catch (NullPointerException e)//ezt meg meg kellene oldani.
             {
-                System.out.println();
+                test = 6;
             }
 
         }
 
+    }
+
+    public void enemyDie(int i) {
+        explosions.add(new Explosion(Enemies.get(i).getX(), Enemies.get(i).getY()));
+        powerups.add(new Powerup(Enemies.get(i).getX(), Enemies.get(i).getY()));
+        Enemies.remove(i);
+        score++;
+    }
+
+    public ArrayList<BasicBackground> getBacks() {
+        return backs;
+    }
+
+    public static ArrayList<Explosion> getExplosions() {
+        return explosions;
+    }
+
+    public boolean isTravel() {
+        return travel;
+    }
+
+    public boolean isGameover() {
+        return gameover;
+    }
+
+    public static ArrayList<Powerup> getPowerups() {
+        return powerups;
     }
 }

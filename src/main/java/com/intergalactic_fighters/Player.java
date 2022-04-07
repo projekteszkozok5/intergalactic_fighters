@@ -75,6 +75,7 @@ public class Player{
         return (int)HP;
     }
 
+
     public boolean isIsDead() {
         return isDead;
     }

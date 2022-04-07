@@ -41,6 +41,18 @@ public class Powerup {
         else if(randomNumber == 4) whatisit = "Lövedék sebesség +1";
         else if(randomNumber == 5) whatisit = "Maximum lövedék +1";
     }
+    
+    public Powerup(int x, int y,int index) {
+        this.x = x;
+        this.y = y;
+        image = new ImageIcon(this.getClass().getResource("/images/powerup.png")).getImage();
+        powerups[index] = 1;
+        if(index == 1) whatisit = "Maximum HP +2";
+        else if(index == 2) whatisit = "HP visszatöltési sebesség +1";
+        else if(index == 3) whatisit = "Sebesség +1";
+        else if(index == 4) whatisit = "Lövedék sebesség +1";
+        else if(index == 5) whatisit = "Maximum lövedék +1";
+    }
 
     public int[] getPowerups() {
         return powerups;

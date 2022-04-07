@@ -21,7 +21,6 @@ public class intergalactic_fighters {
     public static GUI GeneralUserInterface;
     
     public static void main(String[] args) {
-        System.out.println("com.intergalactic_fighters.intergalactic_fighters.main()");
         GeneralUserInterface = new GUI();
         GeneralUserInterface.frame.addKeyListener(new MoveKeyListener());
         //test
