@@ -51,8 +51,6 @@ public class GameEngine extends JPanel {
     private boolean gameover = false;
     private Random r = new Random();
     private int level = 0;
-    public static int test = 6;
-
     public void addScore(int score) {
         this.score += score;
     }
@@ -215,7 +213,7 @@ public class GameEngine extends JPanel {
                 repaint();
             } catch (NullPointerException e)//ezt meg meg kellene oldani.
             {
-                test = 6;
+
             }
 
         }
