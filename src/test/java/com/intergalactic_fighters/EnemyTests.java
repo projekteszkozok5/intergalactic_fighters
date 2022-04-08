@@ -9,6 +9,7 @@ import java.awt.Point;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.DisplayName;
 
 public class EnemyTests {
     GameEngine g;
@@ -20,24 +21,28 @@ public class EnemyTests {
     }
 
     @Test //enemies created
+    @DisplayName("Test: Enemy created")
     public void enemiesCreated()
     {
         assertTrue(g.Enemies.size() > 0);
     }
 
     @Test //enemies number is right
+    @DisplayName("Test: Background created")
     public void backgroundCreated()
     {
         assertTrue(g.getBacks().size() > 0);
     }
 
     @Test //enemies number is right
+    @DisplayName("Test: Enemy number is okay")
     public void enemiesNumber()
     {
         assertEquals(g.Enemies.size(),10);
     }
 
     @Test //enemies can die
+    @DisplayName("Test: Enemy can die")
     public void enemyCanDie()
     {
         Enemy e = new CrazyEnemy(("enemy"), 100, 100, 40, 40, null);
@@ -46,6 +51,7 @@ public class EnemyTests {
     }
 
     @Test //enemies drop powerup
+    @DisplayName("Test: Enemy drop powerup")
     public void enemyDropPowerup()
     {
         g.Enemies.get(0).loseHp(100);
@@ -54,6 +60,7 @@ public class EnemyTests {
     }
 
     @Test //enemies exploding
+    @DisplayName("Test: Enemy exploding")
     public void enemyExplode()
     {
         g.Enemies.get(0).loseHp(100);
@@ -64,6 +71,7 @@ public class EnemyTests {
     //collision tests
 
     @Test //a fast bullet got the enemy
+    @DisplayName("Test: Enemy got shoot fast bullet")
     public void enemyGotShotByFasterBullet()
     {
         Enemy e = new CrazyEnemy(("enemy"), 100, 100, 40, 40, null);
@@ -74,6 +82,7 @@ public class EnemyTests {
     }
 
     @Test //a slower bullet
+    @DisplayName("Test: Enemy got shoot slow bullet")
     public void enemyGotShotBySlowerBullet()
     {
         Enemy e = new CrazyEnemy(("enemy"), 100, 100, 40, 40, null);

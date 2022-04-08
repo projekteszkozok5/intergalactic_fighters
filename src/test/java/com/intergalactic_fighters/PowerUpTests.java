@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.DisplayName;
 
 public class PowerUpTests {
 
@@ -21,6 +22,7 @@ public class PowerUpTests {
     //powerup tests
 
     @Test //pick up maxHP boost
+    @DisplayName("Test: Powerup max hp increase")
     public void maxHpPowerUp()
     {
         Powerup powerup = new Powerup(100,100,1);
@@ -30,6 +32,7 @@ public class PowerUpTests {
     }
 
     @Test //pick up speed boost
+    @DisplayName("Test: Powerup speed increase")
     public void speedPowerUp()
     {
         Powerup powerup = new Powerup(100,100,3);
@@ -39,6 +42,7 @@ public class PowerUpTests {
     }
 
     @Test //pick up max bullet boost
+    @DisplayName("Test: Powerup max bullet number increase")
     public void maxBulletPowerUp()
     {
         Powerup powerup = new Powerup(100,100,5);
