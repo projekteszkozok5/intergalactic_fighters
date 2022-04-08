@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.intergalactic_fighters.Test1
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.394 s - in com.intergalactic_fighters.Test1
