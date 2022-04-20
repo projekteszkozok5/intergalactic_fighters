@@ -36,7 +36,7 @@
     <version>3.0.1</version>
     <configuration>
         <javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
-        <reportOutputDirectory>docs</reportOutputDirectory>
+        <reportOutputDirectory>./</reportOutputDirectory>
         <destDir>javadoc</destDir>
     </configuration>
 </plugin>
