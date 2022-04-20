@@ -10,6 +10,10 @@ jobs:
     steps:
       - checkout
       - run: mvn clean install
+      - persist_to_workspace:
+         root: ./
+         paths:
+           - docs/
 
   test:
     docker:
@@ -29,7 +33,12 @@ jobs:
           password: $Docker_password
     steps:
       - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "13:97:c7:db:18:e5:bf:7c:a2:06:1a:d5:5f:d7:11:bd"
       - run: mvn javadoc:javadoc
+      - store_artifacts:
+          path: docs/
 
 workflows:
   version: 2
