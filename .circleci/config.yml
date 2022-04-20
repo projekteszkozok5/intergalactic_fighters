@@ -29,6 +29,9 @@ jobs:
           password: $Docker_password
     steps:
       - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "66:1c:6c:01:1e:ac:44:32:8d:cc:ce:20:70:ba:8a:0e"
       - run: mvn javadoc:javadoc
 
 workflows:
