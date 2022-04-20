@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.intergalactic_fighters.sprites.enemies;
 
 import com.intergalactic_fighters.Bullet;
@@ -12,10 +7,7 @@ import java.awt.Point;
 import java.util.Random;
 import javax.swing.ImageIcon;
 
-/**
- *
- * @author marton552
- */
+
 public class EasyEnemy extends Enemy{
     
     int dir = -1;

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.intergalactic_fighters.sprites;
 
 import java.awt.Graphics;
@@ -10,10 +5,7 @@ import java.awt.Image;
 import java.util.Random;
 import javax.swing.ImageIcon;
 
-/**
- *
- * @author marton552
- */
+
 public class Powerup {
     private Random r = new Random();
     protected Image image;
