@@ -38,6 +38,8 @@
         <javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
         <reportOutputDirectory>./</reportOutputDirectory>
         <destDir>docs</destDir>
+        <configuration>
+        </configuration>
     </configuration>
 </plugin>
             <plugin>

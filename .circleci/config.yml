@@ -33,6 +33,8 @@ jobs:
           fingerprints:
             - "13:97:c7:db:18:e5:bf:7c:a2:06:1a:d5:5f:d7:11:bd"
       - run: mvn javadoc:javadoc
+      - store_artifacts:
+          path: target/
 
 workflows:
   version: 2
