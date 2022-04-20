@@ -21,6 +21,16 @@ jobs:
       - checkout
       - run: mvn test
 
+  javadoc:
+    docker:
+      - image: cimg/openjdk:17.0.1
+        auth:
+          username: $Docker_login
+          password: $Docker_password
+    steps:
+      - checkout
+      - run: mvn javadoc:javadoc
+
 workflows:
   version: 2
 
@@ -28,5 +38,8 @@ workflows:
     jobs:
       - build
       - test:
+          requires:
+            - build
+      - javadoc:
           requires:
             - build

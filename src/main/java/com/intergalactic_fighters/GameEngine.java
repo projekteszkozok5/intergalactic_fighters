@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.intergalactic_fighters;
 
 import com.intergalactic_fighters.backgrounds.BasicBackground;
@@ -54,6 +49,15 @@ public class GameEngine extends JPanel {
     public void addScore(int score) {
         this.score += score;
     }
+    
+    /**
+ * <p>This is a simple description of the method. . .
+ * <a href="http://www.supermanisthegreatest.com">Superman!</a>
+ * </p>
+ * @param PlayerNumber is the number of the players
+ * @see <a href="http://www.link_to_jira/HERO-402">HERO-402</a>
+ * @since 1.0
+ */
 
     public GameEngine(int PlayerNumber) {
         super();

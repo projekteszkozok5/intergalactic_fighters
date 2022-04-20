@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.intergalactic_fighters;
 
 import java.awt.Image;
@@ -12,10 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.Timer;
 
-/**
- * a
- * @author marton552
- */
+
 public class Bullet {
     private Point startPos;
     private Point direction;
