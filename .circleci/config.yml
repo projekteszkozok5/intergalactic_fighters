@@ -4,12 +4,15 @@ jobs:
   build:
     docker:
       - image: cimg/openjdk:17.0.1
+      - image: 'circleci/openjdk:11-jdk'
         auth:
           username: $Docker_login
           password: $Docker_password
     steps:
       - checkout
       - run: mvn clean install
+          name: Analyze on SonarCloud
+          command: mvn verify sonar:sonar -Dsonar.projectKey=projekteszkozok5_intergalactic_fighters
       - persist_to_workspace:
          root: ./
          paths:
@@ -39,16 +42,6 @@ jobs:
       - run: mvn javadoc:javadoc
       - store_artifacts:
           path: docs/
-  qualityGate:
-    build:
-      docker:
-        - image: 'circleci/openjdk:11-jdk'
-      steps:
-        - checkout
-        - run:
-            name: Analyze on SonarCloud
-            command: mvn verify sonar:sonar -Dsonar.projectKey=projekteszkozok5_intergalactic_fighters
-
 workflows:
   version: 2
 
