@@ -23,7 +23,7 @@ import javax.swing.Timer;
 
 /**
  *
- * @author Prokkály Lászlóka
+ * @author Prokkály László
  */
 public class GameEngine extends JPanel {
 
