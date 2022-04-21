@@ -12,9 +12,9 @@ jobs:
       - checkout
       - run:
           name: Analyze on SonarCloud
-          command:
-            mvn verify sonar:sonar -Dsonar.projectKey=projekteszkozok5_intergalactic_fighters
+          command:  |
             mvn clean install
+            mvn verify sonar:sonar -Dsonar.projectKey=projekteszkozok5_intergalactic_fighters
       - persist_to_workspace:
          root: ./
          paths:
