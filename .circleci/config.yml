@@ -39,6 +39,7 @@ jobs:
       - run: mvn javadoc:javadoc
       - store_artifacts:
           path: docs/
+
   qualityGate:
     docker:
       - image: 'circleci/openjdk:11-jdk'
