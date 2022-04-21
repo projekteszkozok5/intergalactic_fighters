@@ -54,7 +54,7 @@ workflows:
 
   build-then-test:
     jobs:
-      - build:
+      - build
       - qualityGate:
           context: SonarCloud
       - test:
