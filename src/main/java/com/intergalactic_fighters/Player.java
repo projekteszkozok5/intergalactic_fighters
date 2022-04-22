@@ -115,13 +115,13 @@ public class Player{
      * @param Xoffset offset in x axis
      * @param Yoffset offset in y axis
      */
-    public void draw(Graphics g, double zoomLevel, int Xoffset, int Yoffset) {
-        g.drawImage(image, (int)(x * zoomLevel + Xoffset), (int)(y * zoomLevel + Yoffset), (int)(width * zoomLevel), (int)(height * zoomLevel), null);
+    public void draw(Graphics g, double zoomLevel, int xOffset, int yOffset) {
+        g.drawImage(image, (int)(x * zoomLevel + xOffset), (int)(y * zoomLevel + yOffset), (int)(width * zoomLevel), (int)(height * zoomLevel), null);
         for (int i = 0; i < bullets.size(); i++) {
             if(bullets.get(i).isIsDead()) bullets.remove(i);
             else g.drawImage(bullets.get(i).getImg(),
-                    (int)(bullets.get(i).getStartPos().x* zoomLevel + Xoffset),
-                    (int)(bullets.get(i).getStartPos().y * zoomLevel + Yoffset),
+                    (int)(bullets.get(i).getStartPos().x* zoomLevel + xOffset),
+                    (int)(bullets.get(i).getStartPos().y * zoomLevel + yOffset),
                     (int)(15 * zoomLevel),
                     (int)(15 * zoomLevel), null);
         }

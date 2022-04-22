@@ -8,13 +8,11 @@ import com.intergalactic_fighters.sprites.enemies.EasyEnemy;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -27,9 +25,9 @@ import javax.swing.Timer;
 public class GameEngine extends JPanel {
 
     /** <p>The public array of the players is static and reachable from everywhere</p> */
-    public static ArrayList<Player> Players = new ArrayList<>();
+    public static List<Player> Players = new ArrayList<>();
     /** <p>The public array of the enemies is static and reachable from everywhere</p> */
-    public static ArrayList<Enemy> Enemies = new ArrayList<>();
+    public static List<Enemy> Enemies = new ArrayList<>();
     private final int FPS = 60;
     private int gridSize = 40;
     /** <p>This variable shows how much the screen zoomed. Every size multiplied with this.</p> */
@@ -37,11 +35,11 @@ public class GameEngine extends JPanel {
     private int PlayerNumber;
     private int score = 0;
     /** <p>The public array of the backgrounds is static and reachable from everywhere</p> */
-    public static ArrayList<BasicBackground> backs = new ArrayList<>();
+    public static List<BasicBackground> backs = new ArrayList<>();
     /** <p>The public array of the powerups is static and reachable from everywhere</p> */
-    public static ArrayList<Powerup> powerups = new ArrayList<>();
+    public static List<Powerup> powerups = new ArrayList<>();
     /** <p>The public array of the explosions is static and reachable from everywhere</p> */
-    public static ArrayList<Explosion> explosions = new ArrayList<>();
+    public static List<Explosion> explosions = new ArrayList<>();
     private int zoomTimer = -1;
     private boolean travel = false;
     private boolean gameover = false;
@@ -49,12 +47,8 @@ public class GameEngine extends JPanel {
     private int level = 0;
     private Timer newFrameTimer;
     private static String fontStyle = "TimesRoman";
+   
     
-    /** <p> Setter of the score. </p>
-     * @param score the ammount of the added score */
-    public void addScore(int score) {
-        this.score += score;
-    }
     private static final Font timesNewRomanFont =new Font(fontStyle, Font.PLAIN, 20);
     
     /** <p> Constructor setup everything. Creates the player(s) and a basic background. Call set() method.</p>
@@ -83,7 +77,6 @@ public class GameEngine extends JPanel {
         for (int i = 0; i < ((10 + (level * 2)) - rand); i++) {
             Enemies.add(new EasyEnemy("EasyEnemy" + i, (int) (800 / zoomLevel / 2 + gridSize * i - 150), gridSize + 10, gridSize, gridSize));//"enemy"
         }
-        System.out.println(Enemies.size());
     }
 
     /** <p> This method draws into the screen. Also move the backgrounds. </p> */
@@ -252,5 +245,17 @@ public class GameEngine extends JPanel {
      * @return all powerups*/
     public static List<Powerup> getPowerups() {
         return powerups;
+    }
+    
+        /** <p> Setter of the score. </p>
+     * @param score the ammount of the added score */
+    public void addScore(int score) {
+        this.score += score;
+    }
+
+    /** <p> Getter of the score </p> 
+     * @return the score of the player*/
+    public int getScore() {
+        return score;
     }
 }

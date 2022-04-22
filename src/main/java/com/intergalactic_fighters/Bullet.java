@@ -76,7 +76,7 @@ public class Bullet {
     
     /** <p> It detect the collision. If the bulle owner is player, it goes througth the enemy array <br>
      * Check {@link com.intergalactic_fighters.GameEngine}</p> */
-    private void detectCollision(){
+    public void detectCollision(){
         if("player".equals(owner)){
             for (int i = 0; i < GameEngine.Enemies.size(); i++) {
                 if(inBox(GameEngine.Enemies.get(i).getX(),GameEngine.Enemies.get(i).getY(),GameEngine.Enemies.get(i).getWidth())){

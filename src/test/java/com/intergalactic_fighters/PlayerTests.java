@@ -30,4 +30,13 @@ public class PlayerTests {
         p.loseHp(101);
         assertTrue(p.isIsDead());
     }
+    
+    @Test //player die
+    @DisplayName("Test: Player get score")
+    public void playerScore()
+    {
+        int x = g.getScore();
+        g.addScore(5);
+        assertTrue(g.getScore() > x);
+    }
 }

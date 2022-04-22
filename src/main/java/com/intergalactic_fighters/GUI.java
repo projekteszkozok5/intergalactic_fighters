@@ -2,7 +2,6 @@ package com.intergalactic_fighters;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.*;
@@ -17,7 +16,7 @@ import javax.swing.*;
 public class GUI {
 
     private JFrame frame;
-    private GameEngine GameArea;
+    private GameEngine gameArea;
     Timer timer;
 
     /**
@@ -29,7 +28,7 @@ public class GUI {
     public GUI() {
         frame = new JFrame("GAME Frame");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        GameArea = new GameEngine(1);
+        gameArea = new GameEngine(1);
         JMenuBar menuBar = new JMenuBar();
         frame.setJMenuBar(menuBar);
         JMenu gameMenu = new JMenu("Game");
@@ -43,21 +42,21 @@ public class GUI {
         JMenuItem newMenuItem = new JMenuItem("Új játék");
         gameMenu.add(newMenuItem);
         newMenuItem.addActionListener((ActionEvent ae) -> {
-            GameArea.Enemies.clear();
-            GameArea.Players.clear();
-            GameArea.powerups.clear();
-            GameArea.backs.clear();
-            GameArea = new GameEngine(1);
+            gameArea.Enemies.clear();
+            gameArea.Players.clear();
+            gameArea.powerups.clear();
+            gameArea.backs.clear();
+            gameArea = new GameEngine(1);
             timer.restart();
         });
 
         frame.addKeyListener(new MoveKeyListener());
 
-        GameArea.setPreferredSize(new Dimension(800, 600));
+        gameArea.setPreferredSize(new Dimension(800, 600));
 
         JPanel container = new JPanel();
         container.setLayout(new BoxLayout(container, BoxLayout.X_AXIS));
-        container.add(GameArea);
+        container.add(gameArea);
 
         frame.getContentPane().add(container);
         frame.setResizable(false);
@@ -66,8 +65,8 @@ public class GUI {
         frame.setFocusable(true);
 
         timer = new Timer(100, (ActionEvent ae) -> {
-            for (int i = 0; i < GameArea.Enemies.size(); i++) {
-                GameArea.Enemies.get(i).movement();
+            for (int i = 0; i < gameArea.Enemies.size(); i++) {
+                gameArea.Enemies.get(i).movement();
             }
         });
         timer.start();
@@ -89,34 +88,34 @@ public class GUI {
             //Move player with WASD
             //W pressed
             if (e.getKeyCode() == 87) {
-                GameArea.Players.get(0).moveForward();
+                gameArea.Players.get(0).moveForward();
 
             }
             //S pressed
             if (e.getKeyCode() == 83) {
-                GameArea.Players.get(0).moveBackward();
+                gameArea.Players.get(0).moveBackward();
             }
             //A pressed
             if (e.getKeyCode() == 65) {
-                GameArea.Players.get(0).moveLeft();
+                gameArea.Players.get(0).moveLeft();
             }
             //D pressed
             if (e.getKeyCode() == 68) {
-                GameArea.Players.get(0).moveRight();
+                gameArea.Players.get(0).moveRight();
             }
             if (e.getKeyCode() == 32) {
-                GameArea.Players.get(0).shoot();
+                gameArea.Players.get(0).shoot();
             }
         }
 
         public void keyReleased(KeyEvent e) {
             if(e.getKeyCode() == 87 || e.getKeyCode() == 83)
             {   
-                GameArea.Players.get(0).setZeroY();
+                gameArea.Players.get(0).setZeroY();
             }
             if(e.getKeyCode() == 65 || e.getKeyCode() == 68)
             {
-                GameArea.Players.get(0).setZeroX();
+                gameArea.Players.get(0).setZeroX();
             }
         }
 

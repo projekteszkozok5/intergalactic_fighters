@@ -45,4 +45,11 @@ public class BulletTests {
     {
         assertTrue(b.inBox(0, 0, 200));
     }
+    
+    @Test //bullet is alive
+    @DisplayName("Test: bullet in alive")
+    public void bulletIsAlive()
+    {
+        assertTrue(!b.isIsDead());
+    }
 }
