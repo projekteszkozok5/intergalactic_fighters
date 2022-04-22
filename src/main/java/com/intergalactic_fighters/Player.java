@@ -4,11 +4,12 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Player{
     protected double maxHP = 100;
-    protected double HP;
-    protected double HealPerSecond = 1;
+    protected double hp;
+    protected double healPerSecond = 1;
     protected double speed = 3;
     protected String name;
     protected int x;
@@ -47,7 +48,7 @@ public class Player{
 
     public Player(String name, int x, int y, int width, int height, Image image)
     {
-        this.HP = 100;
+        this.hp = 100;
         this.name = name;
         this.x = x;
         this.y = y;
@@ -60,14 +61,14 @@ public class Player{
     }
     public void loseHp(int points)
     {
-        HP = HP - points;
-        if(HP <= 0) isDead = true;
+        hp = hp - points;
+        if(hp <= 0) isDead = true;
     }
     
     public int getHp()
     {
-        if(HP <= 0) return 0;
-        return (int)HP;
+        if(hp <= 0) return 0;
+        return (int) hp;
     }
 
 
@@ -76,13 +77,13 @@ public class Player{
     }
     
     
-    public void draw(Graphics g, double zoomLevel, int Xoffset, int Yoffset) {
-        g.drawImage(image, (int)(x * zoomLevel + Xoffset), (int)(y * zoomLevel + Yoffset), (int)(width * zoomLevel), (int)(height * zoomLevel), null);
+    public void draw(Graphics g, double zoomLevel, int xOffSet, int yOffSet) {
+        g.drawImage(image, (int)(x * zoomLevel + xOffSet), (int)(y * zoomLevel + yOffSet), (int)(width * zoomLevel), (int)(height * zoomLevel), null);
         for (int i = 0; i < bullets.size(); i++) {
             if(bullets.get(i).isIsDead()) bullets.remove(i);
             else g.drawImage(bullets.get(i).getImg(),
-                    (int)(bullets.get(i).getStartPos().x* zoomLevel + Xoffset),
-                    (int)(bullets.get(i).getStartPos().y * zoomLevel + Yoffset),
+                    (int)(bullets.get(i).getStartPos().x* zoomLevel + xOffSet),
+                    (int)(bullets.get(i).getStartPos().y * zoomLevel + yOffSet),
                     (int)(15 * zoomLevel),
                     (int)(15 * zoomLevel), null);
         }
@@ -130,9 +131,9 @@ public class Player{
         cooldown--;
         if(cooldown<0){
             whatCollected="";
-            if(HP<maxHP)HP+=HealPerSecond/50;
+            if(hp <maxHP) hp += healPerSecond /50;
         }
-        if(name=="Player1")collect();
+        if(name.equals("Player1"))collect();
     }
 
     public void setCooldown(int cooldown) {
@@ -154,7 +155,7 @@ public class Player{
         }
     }
 
-    public ArrayList<Bullet> getBullets() {
+    public List<Bullet> getBullets() {
         return bullets;
     }
 
@@ -178,7 +179,7 @@ public class Player{
         for (int i = 0; i < GameEngine.powerups.size(); i++) {
             if(inBox(GameEngine.powerups.get(i).getX(),GameEngine.powerups.get(i).getY())){
                 maxHP+=GameEngine.powerups.get(i).getPowerups()[0]*5;
-                HealPerSecond+=GameEngine.powerups.get(i).getPowerups()[1];
+                healPerSecond +=GameEngine.powerups.get(i).getPowerups()[1];
                 speed+=GameEngine.powerups.get(i).getPowerups()[2]/2.0;
                 bulletSpeed+=GameEngine.powerups.get(i).getPowerups()[3]/2.0;
                 maxBullets+=GameEngine.powerups.get(i).getPowerups()[4];

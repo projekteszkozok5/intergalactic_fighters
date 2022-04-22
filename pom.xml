@@ -56,7 +56,7 @@
                     <archive>
                         <manifest>
                             <!-- give full qualified name of your main class-->
-                            <mainClass>com.intergalactic_fighters.intergalactic_fighters</mainClass>
+                            <mainClass>com.intergalactic_fighters.intergalacticFighters</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

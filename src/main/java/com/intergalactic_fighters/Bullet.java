@@ -14,7 +14,6 @@ public class Bullet {
     private double speed;
     private String owner;
     private Image img;
-    private int size=15;
     private Timer timer;
     private boolean isDead = false;
 
@@ -23,7 +22,7 @@ public class Bullet {
         this.direction = direction;
         this.speed = speed;
         this.owner = owner;
-        if(owner == "player"){
+        if(owner.equals("player")){
             if(direction.x == 0) img = new ImageIcon(this.getClass().getResource("/images/bullet.png")).getImage();
             else img = new ImageIcon(this.getClass().getResource("/images/bullet_side.png")).getImage();
         }
@@ -57,18 +56,18 @@ public class Bullet {
     }
     
     private void detectCollision(){
-        if(owner == "player"){
-            for (int i = 0; i < GameEngine.Enemies.size(); i++) {
-                if(inBox(GameEngine.Enemies.get(i).getX(),GameEngine.Enemies.get(i).getY(),GameEngine.Enemies.get(i).getWidth())){
-                    GameEngine.Enemies.get(i).loseHp(100);
+        if(owner.equals("player")){
+            for (int i = 0; i < GameEngine.enemies.size(); i++) {
+                if(inBox(GameEngine.enemies.get(i).getX(),GameEngine.enemies.get(i).getY(),GameEngine.enemies.get(i).getWidth())){
+                    GameEngine.enemies.get(i).loseHp(100);
                     isDead = true;
                 }
             }
         }
         else{
-            for (int i = 0; i < GameEngine.Players.size(); i++) {
-                if(inBox(GameEngine.Players.get(i).getX(),GameEngine.Players.get(i).getY(),GameEngine.Players.get(i).getWidth())){
-                    GameEngine.Players.get(i).loseHp(20);
+            for (int i = 0; i < GameEngine.players.size(); i++) {
+                if(inBox(GameEngine.players.get(i).getX(),GameEngine.players.get(i).getY(),GameEngine.players.get(i).getWidth())){
+                    GameEngine.players.get(i).loseHp(20);
                     isDead = true;
                 }
             }
