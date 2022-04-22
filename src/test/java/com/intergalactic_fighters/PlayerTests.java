@@ -19,7 +19,7 @@ public class PlayerTests {
     @DisplayName("Test: Player created")
     public void playerCreated()
     {
-        assertTrue(g.Players.size() > 0);
+        assertTrue(g.players.size() > 0);
     }
 
     @Test //player die

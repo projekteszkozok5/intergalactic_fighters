@@ -24,7 +24,7 @@ public class EnemyTests {
     @DisplayName("Test: Enemy created")
     public void enemiesCreated()
     {
-        assertTrue(g.Enemies.size() > 0);
+        assertTrue(g.enemies.size() > 0);
     }
 
     @Test //enemies number is right
@@ -38,7 +38,7 @@ public class EnemyTests {
     @DisplayName("Test: Enemy number is okay")
     public void enemiesNumber()
     {
-        assertEquals(g.Enemies.size(),10);
+        assertEquals(g.enemies.size(),10);
     }
 
     @Test //enemies can die
@@ -54,7 +54,7 @@ public class EnemyTests {
     @DisplayName("Test: Enemy drop powerup")
     public void enemyDropPowerup()
     {
-        g.Enemies.get(0).loseHp(100);
+        g.enemies.get(0).loseHp(100);
         g.enemyDie(0);
         assertTrue(g.getPowerups().size()>0);
     }
@@ -63,7 +63,7 @@ public class EnemyTests {
     @DisplayName("Test: Enemy exploding")
     public void enemyExplode()
     {
-        g.Enemies.get(0).loseHp(100);
+        g.enemies.get(0).loseHp(100);
         g.enemyDie(0);
         assertTrue(g.getExplosions().size()>0);
     }

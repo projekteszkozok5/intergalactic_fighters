@@ -4,6 +4,7 @@ import com.intergalactic_fighters.Bullet;
 import com.intergalactic_fighters.Enemy;
 import java.awt.Image;
 import java.awt.Point;
+import java.security.SecureRandom;
 import java.util.Random;
 import javax.swing.ImageIcon;
 
@@ -16,6 +17,7 @@ import javax.swing.ImageIcon;
  * @author Peszleg Márton
  */
 public class CrazyEnemy extends Enemy {
+  private Random r = new SecureRandom();
         /**
      * <p>
      * The constuctor creates a crazy enemy, and call the Enemy class.
@@ -27,17 +29,18 @@ public class CrazyEnemy extends Enemy {
      * @param width the width of the ship in pixels
      * @param height the height of the ship in pixels
      */
-    public CrazyEnemy(String name, int x, int y, int width, int height) {
-        super("crazy",x, y, width,height);
+    public CrazyEnemy(String name, int x, int y, int width, int height,Image img) {
+        super("crazy",x, y, width,height,null);
     }
     
     /** <p> This method randomly pick a number between 1 and 5. <br>
      * Number 1-4 is a random direction of movement. Number 5 = shoot.</p> */
      @Override
     public void movement(){
-        Random r = new Random();
         int randomNumber=(r.nextInt((5-1)+1)+1);
         switch (randomNumber){
+            default:
+                break;
             case 1:
                 moveForward();
                 setImage(new ImageIcon(this.getClass().getResource("/images/enemies/enemyship.png")).getImage());

@@ -48,8 +48,8 @@ public class GUI {
         newMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                GameArea.Enemies.clear();
-                GameArea.Players.clear();
+                GameArea.enemies.clear();
+                GameArea.players.clear();
                 GameArea.powerups.clear();
                 GameArea.backs.clear();
                 GameArea = new GameEngine(1);
@@ -116,13 +116,14 @@ public class GUI {
         }
 
         public void keyReleased(KeyEvent e) {
-            if (e.getKeyCode() == 87 || e.getKeyCode() == 83) {
-                GameArea.Players.get(0).setZeroY();
+            if(e.getKeyCode() == 87 || e.getKeyCode() == 83)
+            {   
+                GameArea.players.get(0).setZeroY();
             }
-            if (e.getKeyCode() == 65 || e.getKeyCode() == 68) {
-                GameArea.Players.get(0).setZeroX();
+            if(e.getKeyCode() == 65 || e.getKeyCode() == 68)
+            {
+                GameArea.players.get(0).setZeroX();
             }
         }
 
     }
-}
