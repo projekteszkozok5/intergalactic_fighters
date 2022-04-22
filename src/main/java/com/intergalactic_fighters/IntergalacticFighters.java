@@ -1,5 +1,5 @@
 package com.intergalactic_fighters;
-public class intergalacticFighters {
+public class IntergalacticFighters {
     
     public static GUI generalUserInterface;
     
