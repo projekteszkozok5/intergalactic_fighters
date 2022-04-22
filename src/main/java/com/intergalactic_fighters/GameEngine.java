@@ -73,6 +73,7 @@ public class GameEngine extends JPanel {
 
     /** <p> This method creates random number of enemies </p> */
     private void set() {
+        Enemies.clear();
         int rand = r.nextInt(11 + (level * 2));
         int c = 0;
         for (int i = 0; i < rand; i++) {
@@ -83,6 +84,7 @@ public class GameEngine extends JPanel {
             Enemies.add(new EasyEnemy("EasyEnemy" + i, (int) (800 / zoomLevel / 2 + gridSize * i - 150), gridSize + 10, gridSize, gridSize));//"enemy"
             c++;
         }
+        System.out.println(Enemies.size());
     }
 
     /** <p> This method draws into the screen. Also move the backgrounds. </p> */
