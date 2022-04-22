@@ -7,13 +7,32 @@ import java.awt.Point;
 import java.util.Random;
 import javax.swing.ImageIcon;
 
-
+/**
+ * <p>
+ * This is a specified type of enemy. Crazy enemies randomly move and shoot everywhere. The parent class:<br>
+ * Enemy: {@link com.intergalactic_fighters.Enemy}
+ * </p>
+ *
+ * @author Peszleg Márton
+ */
 public class CrazyEnemy extends Enemy {
-    
+        /**
+     * <p>
+     * The constuctor creates a crazy enemy, and call the Enemy class.
+     * </p>
+     *
+     * @param name the name of the enemy ship
+     * @param x the starting position on x axis
+     * @param y the starting position on y axis
+     * @param width the width of the ship in pixels
+     * @param height the height of the ship in pixels
+     */
     public CrazyEnemy(String name, int x, int y, int width, int height) {
         super("crazy",x, y, width,height);
     }
     
+    /** <p> This method randomly pick a number between 1 and 5. <br>
+     * Number 1-4 is a random direction of movement. Number 5 = shoot.</p> */
      @Override
     public void movement(){
         Random r = new Random();
