@@ -42,8 +42,10 @@ jobs:
           fingerprints:
             - "13:97:c7:db:18:e5:bf:7c:a2:06:1a:d5:5f:d7:11:bd"
       - run: mvn javadoc:javadoc
+      - attach_workspace:
+          at: ./docs
       - store_artifacts:
-          path: docs/
+          path: ./docs
 workflows:
   version: 2
 

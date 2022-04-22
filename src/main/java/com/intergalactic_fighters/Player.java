@@ -112,8 +112,8 @@ public class Player{
     /** <p> This method draws the player and it bullets </p> 
      * @param g is a Graphics see {@link java.awt.Graphics}
      * @param zoomLevel how much the screen zoomed
-     * @param Xoffset offset in x axis
-     * @param Yoffset offset in y axis
+     * @param xOffset offset in x axis
+     * @param yOffset offset in y axis
      */
     public void draw(Graphics g, double zoomLevel, int xOffset, int yOffset) {
         g.drawImage(image, (int)(x * zoomLevel + xOffset), (int)(y * zoomLevel + yOffset), (int)(width * zoomLevel), (int)(height * zoomLevel), null);
