@@ -29,8 +29,8 @@ public class CrazyEnemy extends Enemy {
      * @param width the width of the ship in pixels
      * @param height the height of the ship in pixels
      */
-    public CrazyEnemy(String name, int x, int y, int width, int height,Image img) {
-        super("crazy",x, y, width,height,null);
+    public CrazyEnemy(String name, int x, int y, int width, int height) {
+        super("crazy",x, y, width,height);
     }
     
     /** <p> This method randomly pick a number between 1 and 5. <br>

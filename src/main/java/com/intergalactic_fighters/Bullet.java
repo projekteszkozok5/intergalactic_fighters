@@ -86,9 +86,9 @@ public class Bullet {
             }
         }
         else{
-            for (int i = 0; i < GameEngine.players.size(); i++) {
-                if(inBox(GameEngine.players.get(i).getX(),GameEngine.players.get(i).getY(),GameEngine.players.get(i).getWidth())){
-                    GameEngine.players.get(i).loseHp(20);
+            for (int i = 0; i < GameEngine.Players.size(); i++) {
+                if(inBox(GameEngine.Players.get(i).getX(),GameEngine.Players.get(i).getY(),GameEngine.Players.get(i).getWidth())){
+                    GameEngine.Players.get(i).loseHp(20);
                     isDead = true;
                 }
             }

@@ -78,10 +78,10 @@ public class GameEngine extends JPanel {
         Enemies.clear();
         int rand = r.nextInt(11 + (level * 2));
         for (int i = 0; i < rand; i++) {
-            enemies.add(new CrazyEnemy("CrazyEnemy" + i, (int) (800 / zoomLevel / 2 + gridSize * i), gridSize + 10, gridSize, gridSize, enemyShip));//"enemy"
+            Enemies.add(new CrazyEnemy("CrazyEnemy" + i, (int) (800 / zoomLevel / 2 + gridSize * i), gridSize + 10, gridSize, gridSize));//"enemy"
         }
         for (int i = 0; i < ((10 + (level * 2)) - rand); i++) {
-            enemies.add(new EasyEnemy("EasyEnemy" + i, (int) (800 / zoomLevel / 2 + gridSize * i - 150), gridSize + 10, gridSize, gridSize, enemyShip));//"enemy"
+            Enemies.add(new EasyEnemy("EasyEnemy" + i, (int) (800 / zoomLevel / 2 + gridSize * i - 150), gridSize + 10, gridSize, gridSize));//"enemy"
         }
         System.out.println(Enemies.size());
     }
@@ -111,13 +111,13 @@ public class GameEngine extends JPanel {
         for (int i = powerups.size() - 1; i >= 0; i--) {
             powerups.get(i).draw(grphcs, zoomLevel);
         }
-        for (int i = players.size() - 1; i >= 0; i--) {
-            if (!players.get(i).isDead) {
-                players.get(i).draw(grphcs, zoomLevel, 0, 0);
+        for (int i = Players.size() - 1; i >= 0; i--) {
+            if (!Players.get(i).isDead) {
+                Players.get(i).draw(grphcs, zoomLevel, 0, 0);
             }
         }
-        for (int i = enemies.size() - 1; i >= 0; i--) {
-            enemies.get(i).draw(grphcs, zoomLevel, 0, 0);
+        for (int i = Enemies.size() - 1; i >= 0; i--) {
+            Enemies.get(i).draw(grphcs, zoomLevel, 0, 0);
         }
         for (int i = explosions.size() - 1; i >= 0; i--) {
             explosions.get(i).draw(grphcs, zoomLevel);
@@ -129,15 +129,15 @@ public class GameEngine extends JPanel {
         grphcs.fillRect(0, 550, 200, 50);
         grphcs.setColor(Color.red);
         grphcs.drawString("HP:", 560, 580);
-        grphcs.fillRect(605, 555, (int) (190 * (players.get(0).getHp() / players.get(0).getMaxHP())), 40);
+        grphcs.fillRect(605, 555, (int) (190 * (Players.get(0).getHp() / Players.get(0).getMaxHP())), 40);
         grphcs.setColor(Color.blue);
-        grphcs.fillRect(5, 555, (int) (190 * (players.get(0).getBullets().size() / (double) players.get(0).getMaxBullets())), 40);
+        grphcs.fillRect(5, 555, (int) (190 * (Players.get(0).getBullets().size() / (double) Players.get(0).getMaxBullets())), 40);
         grphcs.setFont(new Font("TimesRoman", Font.PLAIN, 30));
         grphcs.setColor(Color.red);
         grphcs.drawString("Score: " + Integer.toString(score) + "/" + Integer.toString(10 + (level * 2)), 320, 40);
         grphcs.setFont(new Font("TimesRoman", Font.PLAIN, 20));
         grphcs.setColor(Color.green);
-        grphcs.drawString(players.get(0).getWhatCollected(), 320, 580);
+        grphcs.drawString(Players.get(0).getWhatCollected(), 320, 580);
         if (gameover) {
             grphcs.setFont(new Font("TimesRoman", Font.PLAIN, 125));
             grphcs.setColor(Color.red);
@@ -152,21 +152,21 @@ public class GameEngine extends JPanel {
         @Override
         public void actionPerformed(ActionEvent ae) {
             try {
-                for (int i = 0; i < players.size(); i++) {
-                    if (players.get(i).isDead && !gameover) {
+                for (int i = 0; i < Players.size(); i++) {
+                    if (Players.get(i).isDead && !gameover) {
                         gameover = true;
-                        enemies.clear();
+                        Enemies.clear();
                         powerups.clear();
-                        explosions.add(new Explosion(players.get(i).getX(), players.get(i).getY()));
+                        explosions.add(new Explosion(Players.get(i).getX(), Players.get(i).getY()));
                     } else {
-                        players.get(i).move();
+                        Players.get(i).move();
                     }
                 }
-                for (int i = 0; i < enemies.size(); i++) {
-                    if (enemies.get(i).isIsDead()) {
+                for (int i = 0; i < Enemies.size(); i++) {
+                    if (Enemies.get(i).isIsDead()) {
                         enemyDie(i);
                     } else {
-                        enemies.get(i).move();
+                        Enemies.get(i).move();
                     }
                 }
                 for (int i = 0; i < powerups.size(); i++) {
@@ -182,7 +182,7 @@ public class GameEngine extends JPanel {
                     zoomTimer = 200;
                     travel = false;
                     int random = r.nextInt(3) + 3;
-                    enemies.clear();
+                    Enemies.clear();
                     score = 0;
                     for (int i = 0; i < random; i++) {
                         Powerup p = new Powerup(r.nextInt(500) + 50, 0);
@@ -218,9 +218,9 @@ public class GameEngine extends JPanel {
     /** <p> If an enemy die, there will be an explosion and drops powerup. Also remove the enemy of the arraylist.</p>
      * @param i which enemy died. It's an index for the Enemies arraylsit */
     public void enemyDie(int i) {
-        explosions.add(new Explosion(enemies.get(i).getX(), enemies.get(i).getY()));
-        powerups.add(new Powerup(enemies.get(i).getX(), enemies.get(i).getY()));
-        enemies.remove(i);
+        explosions.add(new Explosion(Enemies.get(i).getX(), Enemies.get(i).getY()));
+        powerups.add(new Powerup(Enemies.get(i).getX(), Enemies.get(i).getY()));
+        Enemies.remove(i);
         score++;
     }
 

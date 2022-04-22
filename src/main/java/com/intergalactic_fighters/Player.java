@@ -49,7 +49,7 @@ public class Player{
      */
     public Player(String name, int x, int y, int width, int height)
     {
-        this.HP = 100;
+        this.hp = 100;
         this.name = name;
         this.x = x;
         this.y = y;
@@ -89,19 +89,6 @@ public class Player{
 
      /** <p> Lose X number of health point </p> 
      * @param points how much hp lose*/
-    public Player(String name, int x, int y, int width, int height, Image image)
-    {
-        this.hp = 100;
-        this.name = name;
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-        this.image = image;
-        bullets = new ArrayList<>();
-        direction = new Point(0,-1);
-        bulletSpeed=7.0;
-    }
     public void loseHp(int points)
     {
         hp = hp - points;
@@ -133,8 +120,8 @@ public class Player{
         for (int i = 0; i < bullets.size(); i++) {
             if(bullets.get(i).isIsDead()) bullets.remove(i);
             else g.drawImage(bullets.get(i).getImg(),
-                    (int)(bullets.get(i).getStartPos().x* zoomLevel + xOffSet),
-                    (int)(bullets.get(i).getStartPos().y * zoomLevel + yOffSet),
+                    (int)(bullets.get(i).getStartPos().x* zoomLevel + Xoffset),
+                    (int)(bullets.get(i).getStartPos().y * zoomLevel + Yoffset),
                     (int)(15 * zoomLevel),
                     (int)(15 * zoomLevel), null);
         }
