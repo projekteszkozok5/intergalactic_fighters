@@ -35,8 +35,8 @@ public class GUI {
         newMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                GameArea.Enemies.clear();
-                GameArea.Players.clear();
+                GameArea.enemies.clear();
+                GameArea.players.clear();
                 GameArea.powerups.clear();
                 GameArea.backs.clear();
                 GameArea = new GameEngine(1);
@@ -74,42 +74,42 @@ public class GUI {
             //W pressed
             if(e.getKeyCode() == 87)
             {   
-                GameArea.Players.get(0).moveForward();
-                GameArea.Players.get(0).setImage(new ImageIcon(this.getClass().getResource("/images/playership.png")).getImage());
+                GameArea.players.get(0).moveForward();
+                GameArea.players.get(0).setImage(new ImageIcon(this.getClass().getResource("/images/playership.png")).getImage());
 
             }
             //S pressed
             if(e.getKeyCode() == 83)
             {
-                GameArea.Players.get(0).moveBackward();
-                GameArea.Players.get(0).setImage(new ImageIcon(this.getClass().getResource("/images/playershipdown.png")).getImage());
+                GameArea.players.get(0).moveBackward();
+                GameArea.players.get(0).setImage(new ImageIcon(this.getClass().getResource("/images/playershipdown.png")).getImage());
             }
             //A pressed
             if(e.getKeyCode() == 65)
             {
-                GameArea.Players.get(0).moveLeft();
-                GameArea.Players.get(0).setImage(new ImageIcon(this.getClass().getResource("/images/playershipleft.png")).getImage());
+                GameArea.players.get(0).moveLeft();
+                GameArea.players.get(0).setImage(new ImageIcon(this.getClass().getResource("/images/playershipleft.png")).getImage());
             }
             //D pressed
             if(e.getKeyCode() == 68)
             {
-                GameArea.Players.get(0).moveRight();
-                GameArea.Players.get(0).setImage(new ImageIcon(this.getClass().getResource("/images/playershipright.png")).getImage());
+                GameArea.players.get(0).moveRight();
+                GameArea.players.get(0).setImage(new ImageIcon(this.getClass().getResource("/images/playershipright.png")).getImage());
             }
             if(e.getKeyCode() == 32)
             {
-                GameArea.Players.get(0).shoot();
+                GameArea.players.get(0).shoot();
             }
         }
 
         public void keyReleased(KeyEvent e) {
             if(e.getKeyCode() == 87 || e.getKeyCode() == 83)
             {   
-                GameArea.Players.get(0).setZeroY();
+                GameArea.players.get(0).setZeroY();
             }
             if(e.getKeyCode() == 65 || e.getKeyCode() == 68)
             {
-                GameArea.Players.get(0).setZeroX();
+                GameArea.players.get(0).setZeroX();
             }
         }
        
@@ -120,8 +120,8 @@ public class GUI {
         timer = new Timer(100, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                for (int i = 0; i < GameArea.Enemies.size(); i++) {
-                    GameArea.Enemies.get(i).movement();
+                for (int i = 0; i < GameArea.enemies.size(); i++) {
+                    GameArea.enemies.get(i).movement();
                 }
             }});
         timer.start();

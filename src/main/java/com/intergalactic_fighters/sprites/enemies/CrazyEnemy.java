@@ -4,11 +4,13 @@ import com.intergalactic_fighters.Bullet;
 import com.intergalactic_fighters.Enemy;
 import java.awt.Image;
 import java.awt.Point;
+import java.security.SecureRandom;
 import java.util.Random;
 import javax.swing.ImageIcon;
 
 
 public class CrazyEnemy extends Enemy {
+    private Random r = new SecureRandom();
     
     public CrazyEnemy(String name, int x, int y, int width, int height,Image img) {
         super("crazy",x, y, width,height,null);
@@ -16,9 +18,10 @@ public class CrazyEnemy extends Enemy {
     
      @Override
     public void movement(){
-        Random r = new Random();
         int randomNumber=(r.nextInt((5-1)+1)+1);
         switch (randomNumber){
+            default:
+                break;
             case 1:
                 moveForward();
                 setImage(new ImageIcon(this.getClass().getResource("/images/enemies/enemyship.png")).getImage());
