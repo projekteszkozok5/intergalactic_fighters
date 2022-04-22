@@ -51,11 +51,11 @@ workflows:
 
   build-then-test:
     jobs:
-      - build:
-          context: SonarCloud
-      - test:
-          requires:
-            - build
       - javadoc:
+      - build:
+        requires:
+          - javadoc
+        context: SonarCloud
+      - test:
           requires:
             - build
