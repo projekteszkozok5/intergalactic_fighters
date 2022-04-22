@@ -4,6 +4,9 @@ Maven tests in the root: mvn test
 
 Maven build in the root: mvn clean install
 
-Folyamatosan frissülő dokumentáció: https://output.circle-artifacts.com/output/job/471860bf-c9e7-41b3-ada1-0a2c946b8d68/artifacts/0/docs/index.html
+Sonarqube: https://sonarcloud.io/summary/new_code?id=projekteszkozok5_intergalactic_fighters
 
 Mérföldkövenként generált dokumentáció: https://projekteszkozok5.github.io/intergalactic_fighters/
+
+Folyamatosan frissülő dokumentáció: A Circleci artifactjában van tárolva, amit a legutóbbi job javadoc részén lehet olvasni.
+  https://app.circleci.com/pipelines/github/projekteszkozok5/intergalactic_fighters?branch=main&filter=all
