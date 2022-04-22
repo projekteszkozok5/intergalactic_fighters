@@ -16,7 +16,7 @@ public class PowerUpTests {
     @BeforeEach
     void init(){
         g = new GameEngine(1);
-        p = new Player(("Player1"), 100, 100, 40, 40, null);
+        p = new Player(("Player1"), 100, 100, 40, 40);
     }
 
     //powerup tests
