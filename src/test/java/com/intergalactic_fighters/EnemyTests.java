@@ -45,7 +45,7 @@ public class EnemyTests {
     @DisplayName("Test: Enemy can die")
     public void enemyCanDie()
     {
-        Enemy e = new CrazyEnemy(("enemy"), 100, 100, 40, 40, null);
+        Enemy e = new CrazyEnemy(("enemy"), 100, 100, 40, 40);
         e.loseHp(100);
         assertTrue(e.isIsDead());
     }
@@ -74,7 +74,7 @@ public class EnemyTests {
     @DisplayName("Test: Enemy got shoot fast bullet")
     public void enemyGotShotByFasterBullet()
     {
-        Enemy e = new CrazyEnemy(("enemy"), 100, 100, 40, 40, null);
+        Enemy e = new CrazyEnemy(("enemy"), 100, 100, 40, 40);
         Bullet b = new Bullet(new Point(95,120), new Point(1,0), 10, "player");
         b.move();
         boolean th = e.inBox(b.getStartPos().x, b.getStartPos().y);
@@ -85,7 +85,7 @@ public class EnemyTests {
     @DisplayName("Test: Enemy got shoot slow bullet")
     public void enemyGotShotBySlowerBullet()
     {
-        Enemy e = new CrazyEnemy(("enemy"), 100, 100, 40, 40, null);
+        Enemy e = new CrazyEnemy(("enemy"), 100, 100, 40, 40);
         Bullet b = new Bullet(new Point(90,120), new Point(1,0), 5, "player");
         b.move();
         boolean th = e.inBox(b.getStartPos().x, b.getStartPos().y);

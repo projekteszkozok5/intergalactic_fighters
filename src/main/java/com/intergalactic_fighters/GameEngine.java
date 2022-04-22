@@ -11,91 +11,81 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Random;
-import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
-import javax.swing.KeyStroke;
 import javax.swing.Timer;
 
 /**
- *
+ * <p>
+ * This class is the core of the game. Everything happens here.
+ * </p>
  * @author Prokkály László
  */
 public class GameEngine extends JPanel {
 
-    public static ArrayList<Player> Players;
-    public static ArrayList<Enemy> Enemies;
-    private Image PlayerShip;
-    private Image EnemyShip;
-    private Timer newFrameTimer;
+    /** <p>The public array of the players is static and reachable from everywhere</p> */
+    public static ArrayList<Player> Players = new ArrayList<>();
+    /** <p>The public array of the enemies is static and reachable from everywhere</p> */
+    public static ArrayList<Enemy> Enemies = new ArrayList<>();
     private final int FPS = 60;
-    private int gridSize = 40;//segedhalo racsmerete
-    public static double zoomLevel = 1.5;//zoomlevel szamítson az eltolasnal? nem.
+    private int gridSize = 40;
+    /** <p>This variable shows how much the screen zoomed. Every size multiplied with this.</p> */
+    public static double zoomLevel = 1.5;
     private int PlayerNumber;
     private int score = 0;
-    public static ArrayList<BasicBackground> backs;
-    public static ArrayList<Powerup> powerups;
-    public static ArrayList<Explosion> explosions;
+    /** <p>The public array of the backgrounds is static and reachable from everywhere</p> */
+    public static ArrayList<BasicBackground> backs = new ArrayList<>();
+    /** <p>The public array of the powerups is static and reachable from everywhere</p> */
+    public static ArrayList<Powerup> powerups = new ArrayList<>();
+    /** <p>The public array of the explosions is static and reachable from everywhere</p> */
+    public static ArrayList<Explosion> explosions = new ArrayList<>();
     private int zoomTimer = -1;
     private boolean travel = false;
     private boolean finished = false;
     private boolean gameover = false;
     private Random r = new Random();
     private int level = 0;
+    private Timer newFrameTimer;
+    
+    /** <p> Setter of the score.
+     * @param score the ammount of the added score </p> */
     public void addScore(int score) {
         this.score += score;
     }
     
-    /**
- * <p>This is a simple description of the method. . .
- * <a href="http://www.supermanisthegreatest.com">Superman!</a>
- * </p>
- * @param PlayerNumber is the number of the players
- * @see <a href="http://www.link_to_jira/HERO-402">HERO-402</a>
- * @since 1.0
- */
-
+    /** <p> Constructor setup everything. Creates the player(s) and a basic background. Call set() method.
+     * @param PlayerNumber the number of the players </p> */
     public GameEngine(int PlayerNumber) {
         super();
-        this.PlayerNumber = PlayerNumber;
-
         newFrameTimer = new Timer(1000 / FPS, new NewFrameListener());
         newFrameTimer.start();
-        Setup();
-    }
-
-    public void Setup() {
-        Players = new ArrayList<>();
-        Enemies = new ArrayList<>();
-        PlayerShip = new ImageIcon(this.getClass().getResource("/images/playership.png")).getImage();
-        EnemyShip = new ImageIcon(this.getClass().getResource("/images/enemies/enemyship.png")).getImage();
-        Players.add(new Player("Player1", (int) (800 / zoomLevel / 2 - gridSize / 2), (int) (500 / zoomLevel - gridSize / 2), gridSize, gridSize, PlayerShip));//player
+        this.PlayerNumber = PlayerNumber;
+        for (int i = 0; i < PlayerNumber; i++) {
+            Players.add(new Player("Player"+PlayerNumber+"", (int) (800 / zoomLevel / 2 - gridSize / 2), (int) (500 / zoomLevel - gridSize / 2), gridSize, gridSize));//player
+        }
         set();
         BasicBackground back1 = new BasicBackground();
         back1.setPosY(-800);
-        backs = new ArrayList<>();
         backs.add(back1);
-        powerups = new ArrayList<>();
-        explosions = new ArrayList<>();
     }
 
+    /** <p> This method creates random number of enemies </p> */
     private void set() {
         int rand = r.nextInt(11 + (level * 2));
         int c = 0;
         for (int i = 0; i < rand; i++) {
-            Enemies.add(new CrazyEnemy("CrazyEnemy" + i, (int) (800 / zoomLevel / 2 + gridSize * i), gridSize + 10, gridSize, gridSize, EnemyShip));//"enemy"
+            Enemies.add(new CrazyEnemy("CrazyEnemy" + i, (int) (800 / zoomLevel / 2 + gridSize * i), gridSize + 10, gridSize, gridSize));//"enemy"
             c++;
         }
         for (int i = 0; i < ((10 + (level * 2)) - rand); i++) {
-            Enemies.add(new EasyEnemy("EasyEnemy" + i, (int) (800 / zoomLevel / 2 + gridSize * i - 150), gridSize + 10, gridSize, gridSize, EnemyShip));//"enemy"
+            Enemies.add(new EasyEnemy("EasyEnemy" + i, (int) (800 / zoomLevel / 2 + gridSize * i - 150), gridSize + 10, gridSize, gridSize));//"enemy"
             c++;
         }
     }
 
+    /** <p> This method draws into the screen. Also move the backgrounds. </p> */
     @Override
     protected void paintComponent(Graphics grphcs) {
         super.paintComponent(grphcs);
@@ -156,7 +146,7 @@ public class GameEngine extends JPanel {
         }
     }
 
-    class NewFrameListener implements ActionListener {
+    private class NewFrameListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent ae) {
@@ -224,6 +214,8 @@ public class GameEngine extends JPanel {
 
     }
 
+    /** <p> If an enemy die, there will be an explosion and drops powerup. Also remove the enemy of the arraylist.
+     * @param i which enemy died. It's an index for the Enemies arraylsit</p> */
     public void enemyDie(int i) {
         explosions.add(new Explosion(Enemies.get(i).getX(), Enemies.get(i).getY()));
         powerups.add(new Powerup(Enemies.get(i).getX(), Enemies.get(i).getY()));
@@ -231,22 +223,32 @@ public class GameEngine extends JPanel {
         score++;
     }
 
+    /** <p> Getter of the backgrounds </p> 
+     * @return all backgrounds*/
     public ArrayList<BasicBackground> getBacks() {
         return backs;
     }
 
+    /** <p> Getter of the explosions </p> 
+     * @return all explosions*/
     public static ArrayList<Explosion> getExplosions() {
         return explosions;
     }
 
+    /** <p> Check if the ship is finished a level and traveling now </p> 
+     * @return if traveling*/
     public boolean isTravel() {
         return travel;
     }
 
+    /** <p> Check if the player died </p> 
+     * @return if the game is over*/
     public boolean isGameover() {
         return gameover;
     }
 
+    /** <p> Getter of the powerups </p> 
+     * @return all powerups*/
     public static ArrayList<Powerup> getPowerups() {
         return powerups;
     }

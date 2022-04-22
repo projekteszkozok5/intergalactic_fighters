@@ -26,7 +26,7 @@ public class PlayerTests {
     @DisplayName("Test: Player can die")
     public void playerDie()
     {
-        Player p = new Player(("Player1"), 100, 100, 40, 40, null);
+        Player p = new Player(("Player1"), 100, 100, 40, 40);
         p.loseHp(101);
         assertTrue(p.isIsDead());
     }

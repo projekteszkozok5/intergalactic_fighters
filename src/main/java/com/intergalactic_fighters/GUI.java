@@ -7,14 +7,27 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.*;
 
-
+/**
+ * <p>
+ * GUI creates a frame. Methods move enemies and the player.
+ * </p>
+ *
+ * @author Peszleg Márton
+ */
 public class GUI {
-    public JFrame frame;
-    public GameEngine GameArea;
+
+    private JFrame frame;
+    private GameEngine GameArea;
     Timer timer;
-    
-    public GUI(){
-        frame = new JFrame("TEST Frame");
+
+    /**
+     * <p>
+     * The constuctor creates a Game frame and put menuitems on it. It put a
+     * panel on the frame, and starts the game.
+     * </p>
+     */
+    public GUI() {
+        frame = new JFrame("GAME Frame");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         GameArea = new GameEngine(1);
         JMenuBar menuBar = new JMenuBar();
@@ -29,7 +42,7 @@ public class GUI {
                 System.exit(0);
             }
         });
-        
+
         JMenuItem newMenuItem = new JMenuItem("Új játék");
         gameMenu.add(newMenuItem);
         newMenuItem.addActionListener(new ActionListener() {
@@ -40,90 +53,76 @@ public class GUI {
                 GameArea.powerups.clear();
                 GameArea.backs.clear();
                 GameArea = new GameEngine(1);
+                timer.restart();
             }
         });
-        
+
         frame.addKeyListener(new MoveKeyListener());
 
-        //GameArea.addKeyListener(new MoveKeyListener());
-       
         GameArea.setPreferredSize(new Dimension(800, 600));
-        
+
         JPanel container = new JPanel();
         container.setLayout(new BoxLayout(container, BoxLayout.X_AXIS));
         container.add(GameArea);
-        
+
         frame.getContentPane().add(container);
         frame.setResizable(false);
         frame.pack();
         frame.setVisible(true);
         frame.setFocusable(true);
-        
-        moveEnemies();
+
+        timer = new Timer(100, (ActionEvent ae) -> {
+            for (int i = 0; i < GameArea.Enemies.size(); i++) {
+                GameArea.Enemies.get(i).movement();
+            }
+        });
+        timer.start();
     }
-    
-    public class MoveKeyListener extends JFrame implements KeyListener{
-      
+
+    /**
+     * <p>
+     * The control is WASD and SPACE and if the player hit that button, the player direction is changed.
+     * </p>
+     */
+    private class MoveKeyListener extends JFrame implements KeyListener {
+
         public void keyTyped(KeyEvent e) {
-            
+
         }
-        
+
         public void keyPressed(KeyEvent e) {
             //W - 87, A - 65 , S - 83 , D - 68 
             //Move player with WASD
             //W pressed
-            if(e.getKeyCode() == 87)
-            {   
+            if (e.getKeyCode() == 87) {
                 GameArea.Players.get(0).moveForward();
-                GameArea.Players.get(0).setImage(new ImageIcon(this.getClass().getResource("/images/playership.png")).getImage());
 
             }
             //S pressed
-            if(e.getKeyCode() == 83)
-            {
+            if (e.getKeyCode() == 83) {
                 GameArea.Players.get(0).moveBackward();
-                GameArea.Players.get(0).setImage(new ImageIcon(this.getClass().getResource("/images/playershipdown.png")).getImage());
             }
             //A pressed
-            if(e.getKeyCode() == 65)
-            {
+            if (e.getKeyCode() == 65) {
                 GameArea.Players.get(0).moveLeft();
-                GameArea.Players.get(0).setImage(new ImageIcon(this.getClass().getResource("/images/playershipleft.png")).getImage());
             }
             //D pressed
-            if(e.getKeyCode() == 68)
-            {
+            if (e.getKeyCode() == 68) {
                 GameArea.Players.get(0).moveRight();
-                GameArea.Players.get(0).setImage(new ImageIcon(this.getClass().getResource("/images/playershipright.png")).getImage());
             }
-            if(e.getKeyCode() == 32)
-            {
+            if (e.getKeyCode() == 32) {
                 GameArea.Players.get(0).shoot();
             }
         }
 
         public void keyReleased(KeyEvent e) {
-            if(e.getKeyCode() == 87 || e.getKeyCode() == 83)
-            {   
+            if (e.getKeyCode() == 87 || e.getKeyCode() == 83) {
                 GameArea.Players.get(0).setZeroY();
             }
-            if(e.getKeyCode() == 65 || e.getKeyCode() == 68)
-            {
+            if (e.getKeyCode() == 65 || e.getKeyCode() == 68) {
                 GameArea.Players.get(0).setZeroX();
             }
         }
-       
 
-    }
-    
-    public void moveEnemies(){
-        timer = new Timer(100, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                for (int i = 0; i < GameArea.Enemies.size(); i++) {
-                    GameArea.Enemies.get(i).movement();
-                }
-            }});
-        timer.start();
     }
 }

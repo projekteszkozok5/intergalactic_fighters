@@ -4,7 +4,15 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 
+/**
+ * <p>
+ * This is the class of the player and also a parent class of the enemies.
+ * </p>
+ *
+ * @author Peszleg Márton
+ */
 public class Player{
     protected double maxHP = 100;
     protected double HP;
@@ -27,25 +35,18 @@ public class Player{
     protected String whatCollected = "";
     private int cooldown = 15;
 
-    public double getBulletSpeed() {
-        return bulletSpeed;
-    }
-
-    public int getX()
-    {
-        return x;
-    }
-
-    public int getY()
-    {
-        return y;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public Player(String name, int x, int y, int width, int height, Image image)
+    /**
+     * <p>
+     * The constuctor creates a Player and set the image. Default HP is 100, and default bulletspeed is 7.
+     * </p>
+     *
+     * @param name the name of the player ship (for multiplayer)
+     * @param x the starting position on x axis
+     * @param y the starting position on y axis
+     * @param width the width of the ship in pixels
+     * @param height the height of the ship in pixels
+     */
+    public Player(String name, int x, int y, int width, int height)
     {
         this.HP = 100;
         this.name = name;
@@ -53,29 +54,66 @@ public class Player{
         this.y = y;
         this.width = width;
         this.height = height;
-        this.image = image;
         bullets = new ArrayList<>();
         direction = new Point(0,-1);
         bulletSpeed=7.0;
+        setImage(new ImageIcon(this.getClass().getResource("/images/playership.png")).getImage());
     }
+    
+    /** <p> Getter of the bullet speed </p> 
+     * @return bullet speed = how much pixels move per frame*/
+    public double getBulletSpeed() {
+        return bulletSpeed;
+    }
+
+    /** <p> Getter of the position on x axis </p>
+     * @return x posion */
+    public int getX()
+    {
+        return x;
+    }
+
+    /** <p> Getter of the position on y axis </p> 
+     * @return y posion*/
+    public int getY()
+    {
+        return y;
+    }
+
+    /** <p> Getter of the ship width </p> 
+     * @return sprite width*/
+    public int getWidth() {
+        return width;
+    }
+
+     /** <p> Lose X number of health point </p> 
+     * @param points how much hp lose*/
     public void loseHp(int points)
     {
         HP = HP - points;
         if(HP <= 0) isDead = true;
     }
     
+     /** <p> Getter of the helthpoints </p> 
+     * @return the HP. If HP bellow 0, it return with 0*/
     public int getHp()
     {
         if(HP <= 0) return 0;
         return (int)HP;
     }
 
-
+    /** <p> Check if the player is dead </p> 
+     * @return if dead*/
     public boolean isIsDead() {
         return isDead;
     }
     
-    
+    /** <p> This method draws the player and it bullets </p> 
+     * @param g is a Graphics see {@link java.awt.Graphics}
+     * @param zoomLevel how much the screen zoomed
+     * @param Xoffset offset in x axis
+     * @param Yoffset offset in y axis
+     */
     public void draw(Graphics g, double zoomLevel, int Xoffset, int Yoffset) {
         g.drawImage(image, (int)(x * zoomLevel + Xoffset), (int)(y * zoomLevel + Yoffset), (int)(width * zoomLevel), (int)(height * zoomLevel), null);
         for (int i = 0; i < bullets.size(); i++) {
@@ -88,39 +126,52 @@ public class Player{
         }
     }
 
+    /** <p> Set the direction of movement and also the image </p> */
     public void moveForward()
     {
         moveY = -1;
         direction = new Point(0,-1);
+        setImage(new ImageIcon(this.getClass().getResource("/images/playership.png")).getImage());
     }
+    
+    /** <p> Set the direction of movement and also the image </p> */
     public void moveBackward()
     {
         moveY = 1;
         direction = new Point(0,1);
+        setImage(new ImageIcon(this.getClass().getResource("/images/playershipdown.png")).getImage());
     }
 
+    /** <p> Set the direction of movement and also the image </p> */
     public void moveRight()
     {
         moveX = 1;
         direction = new Point(1,0);
+        setImage(new ImageIcon(this.getClass().getResource("/images/playershipright.png")).getImage());
     }
 
+    /** <p> Set the direction of movement and also the image </p> */
     public void moveLeft()
     {
         moveX = -1;
         direction = new Point(-1,0);
+        setImage(new ImageIcon(this.getClass().getResource("/images/playershipleft.png")).getImage());
     }
 
+    /** <p> Null the direction in Y axis </p> */
     public void setZeroY()
     {
         moveY = 0;
     }
 
+    /** <p> Null the direction in X axis </p> */
     public void setZeroX()
     {
         moveX = 0;
     }
 
+    /** <p> Move speed ammount of pixels in direction
+     * Also call collect() method</p> */
     public void move()
     {
         if(x + moveX * speed > 0 && x + moveX * speed < 800/GameEngine.zoomLevel-width) x += moveX * speed;
@@ -132,48 +183,67 @@ public class Player{
             whatCollected="";
             if(HP<maxHP)HP+=HealPerSecond/50;
         }
-        if(name=="Player1")collect();
+        if(name.contains("Player"))collect();
     }
 
+    /** <p> Setter of the collected powerup label cooldown. Literaly how many frames it will be visible. </p> 
+     * @param cooldown collected powerup cooldown*/
     public void setCooldown(int cooldown) {
         this.cooldown = cooldown;
     }
 
+     /** <p> Setter of the image </p> 
+     * @param image the new image of the ship*/
     public void setImage(Image image){
         this.image=image;
     }
+    
+    /** <p> Getter of the image </p> 
+     * @return ship current image*/
     public Image getImage(){
         return this.image;
     }
     
+    /** <p> This method creates a bullet and add to the bullets array </p> */
     public void shoot(){
         if(bullets.size()+1<=maxBullets){
         Bullet b = new Bullet(new Point(x+width/2-15/2,y+height/2-15/2), direction, bulletSpeed, "player");
         bullets.add(b);
-        System.out.println(getX()+","+getY());
         }
     }
 
+    /** <p> Getter of the bullets array </p> 
+     * @return bullets array*/
     public ArrayList<Bullet> getBullets() {
         return bullets;
     }
 
+     /** <p> Getter of the maximum number of bullets </p> 
+     * @return how many bullets can a player shoot*/
     public int getMaxBullets() {
         return maxBullets;
     }
 
+     /** <p> Getter of the maximum helth </p> 
+     * @return how many hp can a player have*/
     public double getMaxHP() {
         return maxHP;
     }
 
+     /** <p> Getter of the actually collected powerup </p> 
+     * @return the collected poweup name*/
     public String getWhatCollected() {
         return whatCollected;
     }
 
+    /** <p> Getter of the speed </p> 
+     * @return speed = how much pixels move in a frame*/
     public double getSpeed() {
         return speed;
     }
     
+    /** <p> Go through the powerups array and check if the player touch one <br>
+     * Set that powerup and the label of it.</p> */
     public void collect(){
         for (int i = 0; i < GameEngine.powerups.size(); i++) {
             if(inBox(GameEngine.powerups.get(i).getX(),GameEngine.powerups.get(i).getY())){
@@ -189,6 +259,10 @@ public class Player{
         }
     }
     
+    /** <p> Check if the player is touching a point </p> 
+     * @param x0 the x coordinate of the point
+     * @param y0 the y coordinate of the point
+     * @return if the player coordinates in a box*/
     public boolean inBox(int x0, int y0){
         return (x0 >= x && x0 <= x+width && y0 >= y && y0 <= y+width);
     }

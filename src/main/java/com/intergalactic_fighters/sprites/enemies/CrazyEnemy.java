@@ -10,8 +10,8 @@ import javax.swing.ImageIcon;
 
 public class CrazyEnemy extends Enemy {
     
-    public CrazyEnemy(String name, int x, int y, int width, int height,Image img) {
-        super("crazy",x, y, width,height,null);
+    public CrazyEnemy(String name, int x, int y, int width, int height) {
+        super("crazy",x, y, width,height);
     }
     
      @Override

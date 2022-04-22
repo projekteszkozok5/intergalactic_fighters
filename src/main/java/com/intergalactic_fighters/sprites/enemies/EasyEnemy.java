@@ -15,8 +15,8 @@ public class EasyEnemy extends Enemy{
     int level = 7;
     private Random r = new Random();
     
-    public EasyEnemy(String name, int x, int y, int width, int height,Image img) {
-        super("easy",x, y, width,height,null);
+    public EasyEnemy(String name, int x, int y, int width, int height) {
+        super("easy",x, y, width,height);
     }
     
     @Override
@@ -37,6 +37,7 @@ public class EasyEnemy extends Enemy{
         }
         else{
             moveRight();
+            setImage(new ImageIcon(this.getClass().getResource("/images/enemies/enemyshipdown1.png")).getImage());
         }
     }
 }
