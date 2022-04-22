@@ -36,25 +36,19 @@ public class GUI {
         menuBar.add(gameMenu);
         JMenuItem exitMenuItem = new JMenuItem("Exit");
         gameMenu.add(exitMenuItem);
-        exitMenuItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                System.exit(0);
-            }
+        exitMenuItem.addActionListener((ActionEvent ae) -> {
+            System.exit(0);
         });
 
         JMenuItem newMenuItem = new JMenuItem("Új játék");
         gameMenu.add(newMenuItem);
-        newMenuItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                GameArea.Enemies.clear();
-                GameArea.Players.clear();
-                GameArea.powerups.clear();
-                GameArea.backs.clear();
-                GameArea = new GameEngine(1);
-                timer.restart();
-            }
+        newMenuItem.addActionListener((ActionEvent ae) -> {
+            GameArea.Enemies.clear();
+            GameArea.Players.clear();
+            GameArea.powerups.clear();
+            GameArea.backs.clear();
+            GameArea = new GameEngine(1);
+            timer.restart();
         });
 
         frame.addKeyListener(new MoveKeyListener());

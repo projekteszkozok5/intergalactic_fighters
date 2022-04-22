@@ -49,7 +49,6 @@ public class Bullet {
         timer = new Timer(25, (ActionEvent ae) -> {
             if(!isDead){
                 move();
-                detectCollision();
             }
         });
         timer.start();
@@ -72,6 +71,7 @@ public class Bullet {
         if(direction.x == 0) startPos.y+=direction.y*speed;
         else startPos.x+=direction.x*speed;
         if(!inBox(0, 0, (int)(800/GameEngine.zoomLevel))) isDead=true;
+        detectCollision();
     }
     
     /** <p> It detect the collision. If the bulle owner is player, it goes througth the enemy array <br>
@@ -100,7 +100,7 @@ public class Bullet {
      * @param boxSize the size of a box.
      * @return if the bullet is in a box/area.
      */
-    private boolean inBox(int x, int y, int boxSize){
+    public boolean inBox(int x, int y, int boxSize){
         return (startPos.x >= x && startPos.x <= x+boxSize && startPos.y >= y && startPos.y <= y+boxSize);
     }
 
