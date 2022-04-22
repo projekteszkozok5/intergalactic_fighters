@@ -49,14 +49,14 @@ public class GameEngine extends JPanel {
     private int level = 0;
     private Timer newFrameTimer;
     
-    /** <p> Setter of the score.
-     * @param score the ammount of the added score </p> */
+    /** <p> Setter of the score. </p>
+     * @param score the ammount of the added score */
     public void addScore(int score) {
         this.score += score;
     }
     
-    /** <p> Constructor setup everything. Creates the player(s) and a basic background. Call set() method.
-     * @param PlayerNumber the number of the players </p> */
+    /** <p> Constructor setup everything. Creates the player(s) and a basic background. Call set() method.</p>
+     * @param PlayerNumber the number of the players */
     public GameEngine(int PlayerNumber) {
         super();
         newFrameTimer = new Timer(1000 / FPS, new NewFrameListener());
@@ -216,8 +216,8 @@ public class GameEngine extends JPanel {
 
     }
 
-    /** <p> If an enemy die, there will be an explosion and drops powerup. Also remove the enemy of the arraylist.
-     * @param i which enemy died. It's an index for the Enemies arraylsit</p> */
+    /** <p> If an enemy die, there will be an explosion and drops powerup. Also remove the enemy of the arraylist.</p>
+     * @param i which enemy died. It's an index for the Enemies arraylsit */
     public void enemyDie(int i) {
         explosions.add(new Explosion(Enemies.get(i).getX(), Enemies.get(i).getY()));
         powerups.add(new Powerup(Enemies.get(i).getX(), Enemies.get(i).getY()));
