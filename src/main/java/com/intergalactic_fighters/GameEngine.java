@@ -44,28 +44,28 @@ public class GameEngine extends JPanel {
     public static ArrayList<Explosion> explosions = new ArrayList<>();
     private int zoomTimer = -1;
     private boolean travel = false;
-    private boolean finished = false;
     private boolean gameover = false;
     private Random r = new Random();
     private int level = 0;
     private Timer newFrameTimer;
+    private static String fontStyle = "TimesRoman";
     
     /** <p> Setter of the score. </p>
      * @param score the ammount of the added score */
     public void addScore(int score) {
         this.score += score;
     }
-    private static final Font timesNewRomanFont =new Font("TimesRoman", Font.PLAIN, 20);
+    private static final Font timesNewRomanFont =new Font(fontStyle, Font.PLAIN, 20);
     
     /** <p> Constructor setup everything. Creates the player(s) and a basic background. Call set() method.</p>
-     * @param PlayerNumber the number of the players */
-    public GameEngine(int PlayerNumber) {
+     * @param number the number of the players */
+    public GameEngine(int number) {
         super();
         newFrameTimer = new Timer(1000 / FPS, new NewFrameListener());
         newFrameTimer.start();
-        this.PlayerNumber = PlayerNumber;
+        this.PlayerNumber = number;
         for (int i = 0; i < PlayerNumber; i++) {
-            Players.add(new Player("Player"+PlayerNumber+"", (int) (800 / zoomLevel / 2 - gridSize / 2), (int) (500 / zoomLevel - gridSize / 2), gridSize, gridSize));//player
+            Players.add(new Player("Player"+PlayerNumber+"", (int) (800 / zoomLevel / 2 - gridSize / 2.0), (int) (500 / zoomLevel - gridSize / 2.0), gridSize, gridSize));//player
         }
         set();
         BasicBackground back1 = new BasicBackground();
@@ -132,17 +132,17 @@ public class GameEngine extends JPanel {
         grphcs.fillRect(605, 555, (int) (190 * (Players.get(0).getHp() / Players.get(0).getMaxHP())), 40);
         grphcs.setColor(Color.blue);
         grphcs.fillRect(5, 555, (int) (190 * (Players.get(0).getBullets().size() / (double) Players.get(0).getMaxBullets())), 40);
-        grphcs.setFont(new Font("TimesRoman", Font.PLAIN, 30));
+        grphcs.setFont(new Font(fontStyle, Font.PLAIN, 30));
         grphcs.setColor(Color.red);
         grphcs.drawString("Score: " + Integer.toString(score) + "/" + Integer.toString(10 + (level * 2)), 320, 40);
-        grphcs.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+        grphcs.setFont(new Font(fontStyle, Font.PLAIN, 20));
         grphcs.setColor(Color.green);
         grphcs.drawString(Players.get(0).getWhatCollected(), 320, 580);
         if (gameover) {
-            grphcs.setFont(new Font("TimesRoman", Font.PLAIN, 125));
+            grphcs.setFont(new Font(fontStyle, Font.PLAIN, 125));
             grphcs.setColor(Color.red);
             grphcs.drawString("GAME OVER", 25, 330);
-            grphcs.setFont(new Font("TimesRoman", Font.PLAIN, 30));
+            grphcs.setFont(new Font(fontStyle, Font.PLAIN, 30));
             grphcs.drawString("Cleared levels: " + Integer.toString(level), 300, 370);
         }
     }

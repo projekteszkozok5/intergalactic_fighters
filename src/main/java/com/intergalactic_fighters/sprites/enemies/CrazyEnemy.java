@@ -2,7 +2,6 @@ package com.intergalactic_fighters.sprites.enemies;
 
 import com.intergalactic_fighters.Bullet;
 import com.intergalactic_fighters.Enemy;
-import java.awt.Image;
 import java.awt.Point;
 import java.security.SecureRandom;
 import java.util.Random;
@@ -39,8 +38,6 @@ public class CrazyEnemy extends Enemy {
     public void movement(){
         int randomNumber=(r.nextInt((5-1)+1)+1);
         switch (randomNumber){
-            default:
-                break;
             case 1:
                 moveForward();
                 setImage(new ImageIcon(this.getClass().getResource("/images/enemies/enemyship.png")).getImage());
@@ -60,6 +57,8 @@ public class CrazyEnemy extends Enemy {
             case 5:
                 Bullet b = new Bullet(new Point(x+width/2-15/2,y+height/2-15/2), direction, getBulletSpeed(), "enemy");
                 bullets.add(b);
+                break;
+            default:
                 break;
         }
     }

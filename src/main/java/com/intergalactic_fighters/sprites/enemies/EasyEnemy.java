@@ -2,7 +2,6 @@ package com.intergalactic_fighters.sprites.enemies;
 
 import com.intergalactic_fighters.Bullet;
 import com.intergalactic_fighters.Enemy;
-import java.awt.Image;
 import java.awt.Point;
 import java.util.Random;
 import javax.swing.ImageIcon;

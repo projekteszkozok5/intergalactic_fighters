@@ -25,7 +25,7 @@ public abstract class Enemy extends Player {
      * @param width the width of the ship in pixels
      * @param height the height of the ship in pixels
      */
-    public Enemy(String name, int x, int y, int width, int height) {
+    protected Enemy(String name, int x, int y, int width, int height) {
         super(name, x, y, width, height);
     }
 
