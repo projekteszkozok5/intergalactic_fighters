@@ -42,8 +42,7 @@ public class Laser {
     }
 
     /**
-     * <
-     * p>
+     * <p>
      * Getter of the position. </p>
      *
      * @return the actual position
@@ -53,8 +52,7 @@ public class Laser {
     }
 
     /**
-     * <
-     * p>
+     * <p>
      * Getter of the bullet image. </p>
      *
      * @return the image of the bullet
@@ -104,8 +102,7 @@ public class Laser {
     }
 
     /**
-     * <
-     * p>
+     * <p>
      * Check if the bullet is dead </p>
      *
      * @return if the bullet is dead.

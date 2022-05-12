@@ -378,8 +378,7 @@ public class Player {
     }
 
     /**
-     * <
-     * p>
+     * <p>
      * Setter of the collected powerup label cooldown. Literaly how many frames
      * it will be visible. </p>
      *
@@ -390,8 +389,7 @@ public class Player {
     }
 
     /**
-     * <
-     * p>
+     * <p>
      * Setter of the image </p>
      *
      * @param image the new image of the ship
@@ -400,9 +398,7 @@ public class Player {
         this.image = image;
     }
 
-    /**
-     * <
-     * p>
+    /**<p>
      * Getter of the image </p>
      *
      * @return ship current image
@@ -412,8 +408,7 @@ public class Player {
     }
 
     /**
-     * <
-     * p>
+     * <p>
      * This method creates a bullet and add to the bullets array </p>
      */
     public void shoot() {
@@ -428,8 +423,7 @@ public class Player {
     }
 
     /**
-     * <
-     * p>
+     * <p>
      * Getter of the bullets array </p>
      *
      * @return bullets array
@@ -439,8 +433,7 @@ public class Player {
     }
 
     /**
-     * <
-     * p>
+     * <p>
      * Getter of the maximum number of bullets </p>
      *
      * @return how many bullets can a player shoot
@@ -450,8 +443,7 @@ public class Player {
     }
 
     /**
-     * <
-     * p>
+     * <p>
      * Getter of the maximum helth </p>
      *
      * @return how many hp can a player have
@@ -461,8 +453,7 @@ public class Player {
     }
 
     /**
-     * <
-     * p>
+     * <p>
      * Getter of the actually collected powerup </p>
      *
      * @return the collected poweup name
@@ -472,8 +463,7 @@ public class Player {
     }
 
     /**
-     * <
-     * p>
+     * <p>
      * Getter of the speed </p>
      *
      * @return speed = how much pixels move in a frame
@@ -483,8 +473,7 @@ public class Player {
     }
 
     /**
-     * <
-     * p>
+     * <p>
      * Go through the powerups array and check if the player touch one <br>
      * Set that powerup and the label of it.</p>
      */
@@ -504,8 +493,7 @@ public class Player {
     }
 
     /**
-     * <
-     * p>
+     * <p>
      * Check if the player is touching a point </p>
      *
      * @param x0 the x coordinate of the point

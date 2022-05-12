@@ -43,15 +43,13 @@ public class GameEngine extends JPanel {
         {'2', 'c', 'c', 'c', 'c', 'e', 'e', 'e', 'e', 'e'},};
 
     /**
-     * <
-     * p>
+     * <p>
      * The public array of the players is static and reachable from
      * everywhere</p>
      */
     public static List<Player> Players = new ArrayList<>();
     /**
-     * <
-     * p>
+     * <p>
      * The public array of the enemies is static and reachable from
      * everywhere</p>
      */
@@ -59,8 +57,7 @@ public class GameEngine extends JPanel {
     private final int FPS = 60;
     public static int gridSize = 40;
     /**
-     * <
-     * p>
+     * <p>
      * This variable shows how much the screen zoomed. Every size multiplied
      * with this.</p>
      */
@@ -68,22 +65,19 @@ public class GameEngine extends JPanel {
     private int PlayerNumber;
     private int score = 0;
     /**
-     * <
-     * p>
+     * <p>
      * The public array of the backgrounds is static and reachable from
      * everywhere</p>
      */
     public static List<BasicBackground> backs = new ArrayList<>();
     /**
-     * <
-     * p>
+     * <p>
      * The public array of the powerups is static and reachable from
      * everywhere</p>
      */
     public static List<Powerup> powerups = new ArrayList<>();
     /**
-     * <
-     * p>
+     * <p>
      * The public array of the explosions is static and reachable from
      * everywhere</p>
      */
@@ -106,8 +100,7 @@ public class GameEngine extends JPanel {
     private static final Font timesNewRomanFont = new Font(fontStyle, Font.PLAIN, 20);
 
     /**
-     * <
-     * p>
+     * <p>
      * Constructor setup everything. Creates the player(s) and a basic
      * background. Call set() method.</p>
      *
@@ -132,8 +125,7 @@ public class GameEngine extends JPanel {
     }
 
     /**
-     * <
-     * p>
+     * <p>
      * This method creates random number of enemies </p>
      */
     private void set() {
@@ -189,8 +181,7 @@ public class GameEngine extends JPanel {
     }
 
     /**
-     * <
-     * p>
+     * <p>
      * This method draws into the screen. Also move the backgrounds. </p>
      */
     @Override
@@ -386,8 +377,7 @@ public class GameEngine extends JPanel {
     }
 
     /**
-     * <
-     * p>
+     * <p>
      * If an enemy die, there will be an explosion and drops powerup. Also
      * remove the enemy of the arraylist.</p>
      *
@@ -401,8 +391,7 @@ public class GameEngine extends JPanel {
     }
 
     /**
-     * <
-     * p>
+     * <p>
      * Getter of the backgrounds </p>
      *
      * @return all backgrounds
@@ -412,8 +401,7 @@ public class GameEngine extends JPanel {
     }
 
     /**
-     * <
-     * p>
+     * <p>
      * Getter of the explosions </p>
      *
      * @return all explosions
@@ -423,8 +411,7 @@ public class GameEngine extends JPanel {
     }
 
     /**
-     * <
-     * p>
+     * <p>
      * Check if the ship is finished a level and traveling now </p>
      *
      * @return if traveling
@@ -434,8 +421,7 @@ public class GameEngine extends JPanel {
     }
 
     /**
-     * <
-     * p>
+     * <p>
      * Check if the player died </p>
      *
      * @return if the game is over
@@ -445,8 +431,7 @@ public class GameEngine extends JPanel {
     }
 
     /**
-     * <
-     * p>
+     * <p>
      * Getter of the powerups </p>
      *
      * @return all powerups
@@ -456,8 +441,7 @@ public class GameEngine extends JPanel {
     }
 
     /**
-     * <
-     * p>
+     * <p>
      * Setter of the score. </p>
      *
      * @param score the ammount of the added score
@@ -467,8 +451,7 @@ public class GameEngine extends JPanel {
     }
 
     /**
-     * <
-     * p>
+     * <p>
      * Getter of the score </p>
      *
      * @return the score of the player
