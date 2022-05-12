@@ -77,7 +77,6 @@ public class Laser {
             startPos.y += 25;
             startPos.x += 10;
         }
-        System.out.println(life);
         if(life < startLife) detectCollision();
         life--;
         if(life <= 0) isDead = true;
