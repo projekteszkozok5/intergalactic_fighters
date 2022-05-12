@@ -42,11 +42,13 @@ public class BossShield extends Enemy {
     public BossShield(String name, int x, int y, int width, int height) {
         super("boos_shield",x, y, width,height);
         shield = new ImageIcon(this.getClass().getResource("/images/enemies/boss/boss_shield.png")).getImage();
+        canLoseHp = false;
     }
     
      /** <p> This method move the enemy left or right..</p> */
     @Override
     public void movement(){
+        if(shipHP > 0){
         if(whenshoot == 0) {
             shooting = 50;
             whenshoot = -1;
@@ -94,6 +96,7 @@ public class BossShield extends Enemy {
         }
         else{
             setZeroY();
+        }
         }
     }
    

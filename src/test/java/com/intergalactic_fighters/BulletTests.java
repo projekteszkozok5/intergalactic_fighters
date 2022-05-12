@@ -31,14 +31,6 @@ public class BulletTests {
         assertEquals(b.getImg(),(new ImageIcon(this.getClass().getResource("/images/bullet.png")).getImage()));
     }
     
-    @Test //bullet moved
-    @DisplayName("Test: player bullet moved")
-    public void bulletMoved()
-    {
-        b.move();
-        assertEquals(b.getStartPos(), new Point(100,110));
-    }
-    
     @Test //bullet in a box
     @DisplayName("Test: bullet in a box")
     public void bulletInBox()

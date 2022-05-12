@@ -231,22 +231,18 @@ public class GameEngine extends JPanel {
 
         if (left != null) {
             left.draw(grphcs, zoomLevel);
-            if(left.isChoosed()){
+            if (left.isChoosed()) {
                 zoomTimer--;
                 powers.remove(powers.indexOf(left.getArgs()));
-                left = null;
-                right = null;
-                System.out.println(powers);
+                collectPower(left.getArgs());
             }
         }
         if (right != null) {
             right.draw(grphcs, zoomLevel);
-            if(right.isChoosed()){
+            if (right.isChoosed()) {
                 zoomTimer--;
                 powers.remove(powers.indexOf(right.getArgs()));
-                left = null;
-                right = null;
-                System.out.println(powers);
+                collectPower(right.getArgs());
             }
         }
 
@@ -275,6 +271,15 @@ public class GameEngine extends JPanel {
             grphcs.drawString("GAME OVER", 25, 330);
             grphcs.setFont(new Font(fontStyle, Font.PLAIN, 30));
             grphcs.drawString("Cleared levels: " + Integer.toString(level), 300, 370);
+        }
+    }
+
+    private void collectPower(int i) {
+        left = null;
+        right = null;
+        if(i == 1){
+            Players.get(0).setPower1(true);
+            Players.get(0).setMaxBullets();
         }
     }
 
@@ -330,20 +335,19 @@ public class GameEngine extends JPanel {
                             backs.get(i).setSpeed(zoomTimer / 2);
                         }
                     }
-                    if(zoomTimer < 19){
+                    if (zoomTimer < 19) {
                         Players.get(0).moveBackward();
                     }
                 } else if (zoomTimer == 20) {
                     int rand1 = (r.nextInt(powers.size()));
                     int rand2;
-                    do{
+                    do {
                         rand2 = (r.nextInt(powers.size()));
-                    }while(rand1 == rand2);
+                    } while (rand1 == rand2);
                     left = new PowerUpgrade((int) (800 / zoomLevel) / 4, (int) (100 / zoomLevel), powers.get(rand1));
                     right = new PowerUpgrade((int) (((800 / zoomLevel) / 4) * 3) - 100, (int) (100 / zoomLevel), powers.get(rand2));
                     zoomTimer--;
-                }
-                else if (zoomTimer == 0) {
+                } else if (zoomTimer == 0) {
                     set();
                     for (int i = 0; i < backs.size(); i++) {
                         backs.get(i).setSpeed(1);
