@@ -5,6 +5,8 @@ import com.intergalactic_fighters.sprites.Explosion;
 import com.intergalactic_fighters.sprites.Powerup;
 import com.intergalactic_fighters.sprites.enemies.CrazyEnemy;
 import com.intergalactic_fighters.sprites.enemies.EasyEnemy;
+import com.intergalactic_fighters.sprites.enemies.LaserEnemy;
+import com.intergalactic_fighters.sprites.enemies.NullEnemy;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -23,6 +25,19 @@ import javax.swing.Timer;
  * @author Prokkály László
  */
 public class GameEngine extends JPanel {
+    
+    private char[][] maps = new char[][]{
+        {'c','c','c','c','c','e','e','e','e','e'},
+        {'c','c','c','c','c','c','c','e','e','e'},
+        {'c','c','c','c','c','e','e','e','l','l'},
+        {'l','l','l','l','l','e','e','e','e','e'},
+        {'n','n','n','c','c','e','e','e','e','e'},
+        {'n','n','l','l','l','e','e','e','e','c'},
+        {'c','c','c','c','c','c','c','c','n','n'},
+        {'n','n','n','n','n','l','l','l','l','l'},
+        {'1','c','c','c','c','e','e','e','e','e'},
+        {'2','c','c','c','c','e','e','e','e','e'},
+    };
 
     /** <p>The public array of the players is static and reachable from everywhere</p> */
     public static List<Player> Players = new ArrayList<>();
@@ -70,13 +85,31 @@ public class GameEngine extends JPanel {
     /** <p> This method creates random number of enemies </p> */
     private void set() {
         Enemies.clear();
-        int rand = r.nextInt(11 + (level * 2));
-        for (int i = 0; i < rand; i++) {
+        int rand = r.nextInt(8);
+        int crazynum = 0;
+        int easynum = 0;
+        int lasernum = 0;
+        int nullnum = 0;
+        for (int i = 0; i < 10; i++) {
+            if(maps[rand][i] == 'c') crazynum++;
+            else if(maps[rand][i] == 'e') easynum++;
+            else if(maps[rand][i] == 'l') lasernum++;
+            else if(maps[rand][i] == 'n') nullnum++;
+            crazynum+=(level*2);
+        }
+        for (int i = 0; i < crazynum; i++) {
             Enemies.add(new CrazyEnemy("CrazyEnemy" + i, (int) (800 / zoomLevel / 2 + gridSize * i), gridSize + 10, gridSize, gridSize));//"enemy"
         }
-        for (int i = 0; i < ((10 + (level * 2)) - rand); i++) {
+        for (int i = 0; i < easynum; i++) {
             Enemies.add(new EasyEnemy("EasyEnemy" + i, (int) (800 / zoomLevel / 2 + gridSize * i - 150), gridSize + 10, gridSize, gridSize));//"enemy"
         }
+        for (int i = 0; i < lasernum; i++) {
+            Enemies.add(new LaserEnemy("LaserEnemy" + i, (int) (800 / zoomLevel / 2 + gridSize * i - 200), gridSize*3, gridSize, gridSize));//"enemy"
+        }
+        for (int i = 0; i < nullnum; i++) {
+            Enemies.add(new NullEnemy("NullEnemy" + i, (int) (800 / zoomLevel / 2 + gridSize* 2 * i - 150), gridSize + 10, gridSize, gridSize));//"enemy"
+        }
+                
     }
 
     /** <p> This method draws into the screen. Also move the backgrounds. </p> */

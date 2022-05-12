@@ -35,6 +35,8 @@ public class Player{
     protected boolean collided = false;
     protected String whatCollected = "";
     private int cooldown = 15;
+    protected Laser l;
+    protected boolean hasLaser = false;
 
     /**
      * <p>
@@ -125,6 +127,7 @@ public class Player{
                     (int)(15 * zoomLevel),
                     (int)(15 * zoomLevel), null);
         }
+        if(hasLaser) g.drawImage(l.getImg(), (int)(l.getStartPos().x * zoomLevel + xOffset), (int)(l.getStartPos().y * zoomLevel + yOffset), (int)(20 * zoomLevel), (int)(500 * zoomLevel), null);
     }
 
     /** <p> Set the direction of movement and also the image </p> */
@@ -185,6 +188,10 @@ public class Player{
             if(hp <maxHP) hp += healPerSecond /50;
         }
         if(name.contains("Player"))collect();
+        if(hasLaser){
+            l.move(x, y);
+            if(l.isIsDead()) hasLaser = false;
+        }
     }
 
     /** <p> Setter of the collected powerup label cooldown. Literaly how many frames it will be visible. </p> 
@@ -210,6 +217,8 @@ public class Player{
         if(bullets.size()+1<=maxBullets){
         Bullet b = new Bullet(new Point(x+width/2-15/2,y+height/2-15/2), direction, bulletSpeed, "player");
         bullets.add(b);
+        l = new Laser(new Point(x+width/2-15/2,y+height/2-15/2), "player",20);
+        hasLaser = true;
         }
     }
 
