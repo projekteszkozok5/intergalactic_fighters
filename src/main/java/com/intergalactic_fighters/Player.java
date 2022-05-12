@@ -84,6 +84,18 @@ public class Player {
     public void setPower1(boolean power1) {
         this.power1 = power1;
     }
+    public void setPower2(boolean power2) {
+        this.power2 = power2;
+    }
+    public void setPower3(boolean power3) {
+        this.power3 = power3;
+    }
+    public void setPower4(boolean power4) {
+        this.power4 = power4;
+    }
+    public void setPower5(boolean power5) {
+        this.power5 = power5;
+    }
 
     public Image getShield() {
         return shield;

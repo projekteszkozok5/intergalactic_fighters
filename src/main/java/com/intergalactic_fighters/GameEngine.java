@@ -272,6 +272,18 @@ public class GameEngine extends JPanel {
             Players.get(0).setPower1(true);
             Players.get(0).setMaxBullets();
         }
+        if (i == 2) {
+            Players.get(0).setPower2(true);
+        }
+        if (i == 3) {
+            Players.get(0).setPower3(true);
+        }
+        if (i == 4) {
+            Players.get(0).setPower4(true);
+        }
+        if (i == 5) {
+            Players.get(0).setPower5(true);
+        }
     }
 
     private class NewFrameListener implements ActionListener {
