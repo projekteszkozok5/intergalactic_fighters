@@ -45,10 +45,13 @@ public class Player {
     private boolean power3 = false;
     private boolean power4 = false;
     private boolean power5 = false;
-    private boolean power6 = false;
-    private boolean power7 = false;
-    private boolean power8 = false;
     protected int green_shield = -1;
+    protected int yellow_shield = -1;
+    private Player tars1;
+    private Player tars_laser;
+    private int tars1_shoot = -1;
+    private int tars_laser_shoot = -1;
+    private int laser_shoot = -1;
 
     /**
      * <p>
@@ -73,7 +76,7 @@ public class Player {
         direction = new Point(0, -1);
         bulletSpeed = 7.0;
         setImage(new ImageIcon(this.getClass().getResource("/images/playership.png")).getImage());
-        if (name.contains("Player")) {
+        if (name.contains("Player") && name != "Player_tars") {
             shield = new ImageIcon(this.getClass().getResource("/images/shield_green.png")).getImage();
         }
     }
@@ -187,6 +190,8 @@ public class Player {
      * @param yOffset offset in y axis
      */
     public void draw(Graphics g, double zoomLevel, int xOffset, int yOffset) {
+        if(tars1 != null) tars1.draw(g, zoomLevel, xOffset, yOffset);
+        if(tars_laser != null) tars_laser.draw(g, zoomLevel, xOffset, yOffset);
         g.drawImage(image, (int) (x * zoomLevel + xOffset), (int) (y * zoomLevel + yOffset), (int) (width * zoomLevel), (int) (height * zoomLevel), null);
         if (!canLoseHp) {
             g.drawImage(shield, (int) (x * zoomLevel + xOffset), (int) (y * zoomLevel + yOffset), (int) (width * zoomLevel), (int) (height * zoomLevel), null);
@@ -213,6 +218,8 @@ public class Player {
      * Set the direction of movement and also the image </p>
      */
     public void moveForward() {
+                if(tars1 != null) tars1.moveForward();
+        if(tars_laser != null) tars_laser.moveForward();
         moveY = -1;
         direction = new Point(0, -1);
         setImage(new ImageIcon(this.getClass().getResource("/images/playership.png")).getImage());
@@ -224,6 +231,8 @@ public class Player {
      * Set the direction of movement and also the image </p>
      */
     public void moveBackward() {
+                if(tars1 != null) tars1.moveBackward();
+        if(tars_laser != null) tars_laser.moveBackward();
         moveY = 1;
         direction = new Point(0, 1);
         setImage(new ImageIcon(this.getClass().getResource("/images/playershipdown.png")).getImage());
@@ -235,6 +244,8 @@ public class Player {
      * Set the direction of movement and also the image </p>
      */
     public void moveRight() {
+                if(tars1 != null) tars1.moveRight();
+        if(tars_laser != null) tars_laser.moveRight();
         moveX = 1;
         direction = new Point(1, 0);
         setImage(new ImageIcon(this.getClass().getResource("/images/playershipright.png")).getImage());
@@ -246,6 +257,8 @@ public class Player {
      * Set the direction of movement and also the image </p>
      */
     public void moveLeft() {
+        if(tars1 != null) tars1.moveLeft();
+        if(tars_laser != null) tars_laser.moveLeft();
         moveX = -1;
         direction = new Point(-1, 0);
         setImage(new ImageIcon(this.getClass().getResource("/images/playershipleft.png")).getImage());
@@ -257,6 +270,8 @@ public class Player {
      * Null the direction in Y axis </p>
      */
     public void setZeroY() {
+        if(tars1 != null) tars1.setZeroY();
+        if(tars_laser != null) tars_laser.setZeroY();
         moveY = 0;
     }
 
@@ -266,6 +281,8 @@ public class Player {
      * Null the direction in X axis </p>
      */
     public void setZeroX() {
+        if(tars1 != null) tars1.setZeroX();
+        if(tars_laser != null) tars_laser.setZeroX();
         moveX = 0;
     }
 
@@ -275,6 +292,8 @@ public class Player {
      * Move speed ammount of pixels in direction Also call collect() method</p>
      */
     public void move() {
+        if(tars1 != null) tars1.move();
+        if(tars_laser != null) tars_laser.move();
         if (x + moveX * speed > 0 && x + moveX * speed < 800 / GameEngine.zoomLevel - width) {
             x += moveX * speed;
         } else {
@@ -304,9 +323,9 @@ public class Player {
         if (!inBox(0, 0, (int) (800 / GameEngine.zoomLevel))) {
             isDead = true;
         }
-        if (power5) {
+        if (power3) {
             green_shield = 30;
-            power5 = false;
+            power3 = false;
             canLoseHp = false;
         }
         if (green_shield < 30 && green_shield > 0) {
@@ -316,8 +335,44 @@ public class Player {
             green_shield = 30;
             canLoseHp = false;
         }
+        
+        if(tars1 != null && tars1_shoot == -1){
+            tars1_shoot = 45;
+            tars1.shoot();
+        }
+        else if(tars1 != null){
+            tars1_shoot--;
+        }
+        
+        if(tars_laser != null && tars_laser_shoot == -1){
+            tars_laser_shoot = 90;
+            tars_laser.lasering(5);
+        }
+        else if(tars1 != null){
+            tars_laser_shoot--;
+        }
+        if(power2 && laser_shoot == -1){
+            tars_laser_shoot = 90;
+            lasering(5);
+        }
+        else if(power2){
+            tars_laser_shoot--;
+        }
+        if(power4 && tars1 == null){
+            tars1 = new Player("Player_tars", x+40, y+10, (int)(width/3), (int)(height/3));
+        }
+        if(power5 && tars_laser == null){
+            tars_laser = new Player("Player_tars", x-10, y+10, (int)(width/3), (int)(height/3));
+        }
     }
 
+    public void lasering(int iksz){
+        if(!hasLaser){
+            l = new Laser(direction, "player", iksz);
+            hasLaser = true;
+        }
+    }
+    
     public void setMaxBullets() {
         this.maxBullets *= 2;
     }

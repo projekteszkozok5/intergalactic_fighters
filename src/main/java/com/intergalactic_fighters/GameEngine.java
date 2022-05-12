@@ -126,7 +126,7 @@ public class GameEngine extends JPanel {
         back1.setPosY(-800);
         backs.add(back1);
         powers = new ArrayList<Integer>();
-        for (int i = 1; i < 9; i++) {
+        for (int i = 1; i < 6; i++) {
             powers.add(i);
         }
     }
@@ -277,7 +277,7 @@ public class GameEngine extends JPanel {
     private void collectPower(int i) {
         left = null;
         right = null;
-        if(i == 1){
+        if (i == 1) {
             Players.get(0).setPower1(true);
             Players.get(0).setMaxBullets();
         }
@@ -326,33 +326,54 @@ public class GameEngine extends JPanel {
                         powerups.add(p);
                     }
                 }
-                if ((zoomTimer > 20 || zoomTimer < 19) && zoomTimer > 0) {
-                    zoomTimer--;
-                    for (int i = 0; i < backs.size(); i++) {
-                        if (zoomTimer > 100) {
-                            backs.get(i).setSpeed((200 - zoomTimer) / 2);
-                        } else {
-                            backs.get(i).setSpeed(zoomTimer / 2);
+                if (level < 5) {
+                    if ((zoomTimer > 20 || zoomTimer < 19) && zoomTimer > 0) {
+                        zoomTimer--;
+                        for (int i = 0; i < backs.size(); i++) {
+                            if (zoomTimer > 100) {
+                                backs.get(i).setSpeed((200 - zoomTimer) / 2);
+                            } else {
+                                backs.get(i).setSpeed(zoomTimer / 2);
+                            }
+                        }
+                        if (zoomTimer < 19) {
+                            Players.get(0).moveBackward();
+                        }
+                    } else if (zoomTimer == 20) {
+                        int rand1 = (r.nextInt(powers.size()));
+                        int rand2;
+                        do {
+                            rand2 = (r.nextInt(powers.size()));
+                        } while (rand1 == rand2);
+                        left = new PowerUpgrade((int) (800 / zoomLevel) / 4, (int) (100 / zoomLevel), powers.get(rand1));
+                        right = new PowerUpgrade((int) (((800 / zoomLevel) / 4) * 3) - 100, (int) (100 / zoomLevel), powers.get(rand2));
+                        zoomTimer--;
+                    } else if (zoomTimer == 0) {
+                        set();
+                        for (int i = 0; i < backs.size(); i++) {
+                            backs.get(i).setSpeed(1);
+                        }
+                        zoomTimer--;
+                    }
+                } else {
+                    if (zoomTimer > 0) {
+                        zoomTimer--;
+                        for (int i = 0; i < backs.size(); i++) {
+                            if (zoomTimer > 100) {
+                                backs.get(i).setSpeed((200 - zoomTimer) / 2);
+                            } else {
+                                backs.get(i).setSpeed(zoomTimer / 2);
+                            }
                         }
                     }
-                    if (zoomTimer < 19) {
-                        Players.get(0).moveBackward();
+                    else if (zoomTimer == 0) {
+                        set();
+                        for (int i = 0; i < backs.size(); i++) {
+                            backs.get(i).setSpeed(1);
+                        }
+                        zoomTimer--;
                     }
-                } else if (zoomTimer == 20) {
-                    int rand1 = (r.nextInt(powers.size()));
-                    int rand2;
-                    do {
-                        rand2 = (r.nextInt(powers.size()));
-                    } while (rand1 == rand2);
-                    left = new PowerUpgrade((int) (800 / zoomLevel) / 4, (int) (100 / zoomLevel), powers.get(rand1));
-                    right = new PowerUpgrade((int) (((800 / zoomLevel) / 4) * 3) - 100, (int) (100 / zoomLevel), powers.get(rand2));
-                    zoomTimer--;
-                } else if (zoomTimer == 0) {
-                    set();
-                    for (int i = 0; i < backs.size(); i++) {
-                        backs.get(i).setSpeed(1);
-                    }
-                    zoomTimer--;
+
                 }
                 repaint();
             } catch (NullPointerException e)//ezt meg meg kellene oldani.
