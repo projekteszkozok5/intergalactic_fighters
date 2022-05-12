@@ -66,6 +66,8 @@ public class GameEngine extends JPanel {
     private static String fontStyle = "TimesRoman";
     private int EnemySizeNow = 0;
     public static boolean isBossAlive = false;
+    private boolean boss1killed = false;
+    private boolean boss12killed = false;
    
     
     private static final Font timesNewRomanFont =new Font(fontStyle, Font.PLAIN, 20);
@@ -89,8 +91,10 @@ public class GameEngine extends JPanel {
     /** <p> This method creates random number of enemies </p> */
     private void set() {
         Enemies.clear();
-        int rand = r.nextInt(8);
-        rand = 9;
+        int rand = r.nextInt(10);
+        if(level%2 == 0) rand = r.nextInt(10-8)+8;
+        if(rand == 8 && boss1killed) rand = 3;
+        if(rand == 9 && boss12killed) rand = 4;
         int crazynum = 0;
         int easynum = 0;
         int lasernum = 0;
@@ -119,10 +123,12 @@ public class GameEngine extends JPanel {
         else if(rand == 8){
             Enemies.add(new BossShield("BossShield", (int) (800 / zoomLevel / 2 + gridSize* 2 - 150), gridSize + 10, gridSize*4, gridSize*4));
             isBossAlive = true;
+            boss1killed = true;
         }
         else if(rand == 9){
             Enemies.add(new BossLaser("BossLaser", (int) (800 / zoomLevel / 2 + gridSize* 2 - 150), gridSize-10, gridSize*4, gridSize*3));
             isBossAlive = true;
+            boss12killed = true;
         }
     }
 
