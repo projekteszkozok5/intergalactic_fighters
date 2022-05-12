@@ -94,7 +94,7 @@ public class Laser {
         else{
             for (int i = 0; i < GameEngine.Players.size(); i++) {
                 if(inBox(GameEngine.Players.get(i).getX(),GameEngine.Players.get(i).getWidth())){
-                    GameEngine.Players.get(i).loseHp(20);
+                    GameEngine.Players.get(i).loseHp(5);
                 }
             }
         }

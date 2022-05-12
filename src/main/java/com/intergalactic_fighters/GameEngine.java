@@ -3,6 +3,7 @@ package com.intergalactic_fighters;
 import com.intergalactic_fighters.backgrounds.BasicBackground;
 import com.intergalactic_fighters.sprites.Explosion;
 import com.intergalactic_fighters.sprites.Powerup;
+import com.intergalactic_fighters.sprites.enemies.BossLaser;
 import com.intergalactic_fighters.sprites.enemies.BossShield;
 import com.intergalactic_fighters.sprites.enemies.CrazyEnemy;
 import com.intergalactic_fighters.sprites.enemies.EasyEnemy;
@@ -89,7 +90,7 @@ public class GameEngine extends JPanel {
     private void set() {
         Enemies.clear();
         int rand = r.nextInt(8);
-        rand = 8;
+        rand = 9;
         int crazynum = 0;
         int easynum = 0;
         int lasernum = 0;
@@ -117,6 +118,10 @@ public class GameEngine extends JPanel {
         }
         else if(rand == 8){
             Enemies.add(new BossShield("BossShield", (int) (800 / zoomLevel / 2 + gridSize* 2 - 150), gridSize + 10, gridSize*4, gridSize*4));
+            isBossAlive = true;
+        }
+        else if(rand == 9){
+            Enemies.add(new BossLaser("BossLaser", (int) (800 / zoomLevel / 2 + gridSize* 2 - 150), gridSize-10, gridSize*4, gridSize*3));
             isBossAlive = true;
         }
     }
