@@ -46,21 +46,8 @@ jobs:
           at: ./docs
       - store_artifacts:
           path: ./docs
-
-orbs:
-  aws-code-deploy: circleci/aws-code-deploy@x.y
-
 workflows:
   version: 2
-
-  deploy_application:
-    jobs:
-      - aws-code-deploy/deploy:
-          application-name: myApplication
-          bundle-bucket: myApplicationS3Bucket
-          bundle-key: myS3BucketKey
-          deployment-group: myDeploymentGroup
-          service-role-arn: myDeploymentGroupRoleARN
 
   build-then-test:
     jobs:
