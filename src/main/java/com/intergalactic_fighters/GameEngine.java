@@ -3,6 +3,7 @@ package com.intergalactic_fighters;
 import com.intergalactic_fighters.backgrounds.BasicBackground;
 import com.intergalactic_fighters.sprites.Explosion;
 import com.intergalactic_fighters.sprites.Powerup;
+import com.intergalactic_fighters.sprites.enemies.BossShield;
 import com.intergalactic_fighters.sprites.enemies.CrazyEnemy;
 import com.intergalactic_fighters.sprites.enemies.EasyEnemy;
 import com.intergalactic_fighters.sprites.enemies.LaserEnemy;
@@ -44,7 +45,7 @@ public class GameEngine extends JPanel {
     /** <p>The public array of the enemies is static and reachable from everywhere</p> */
     public static List<Enemy> Enemies = new ArrayList<>();
     private final int FPS = 60;
-    private int gridSize = 40;
+    public static int gridSize = 40;
     /** <p>This variable shows how much the screen zoomed. Every size multiplied with this.</p> */
     public static double zoomLevel = 1.5;
     private int PlayerNumber;
@@ -62,6 +63,8 @@ public class GameEngine extends JPanel {
     private int level = 0;
     private Timer newFrameTimer;
     private static String fontStyle = "TimesRoman";
+    private int EnemySizeNow = 0;
+    public static boolean isBossAlive = false;
    
     
     private static final Font timesNewRomanFont =new Font(fontStyle, Font.PLAIN, 20);
@@ -86,10 +89,12 @@ public class GameEngine extends JPanel {
     private void set() {
         Enemies.clear();
         int rand = r.nextInt(8);
+        rand = 8;
         int crazynum = 0;
         int easynum = 0;
         int lasernum = 0;
         int nullnum = 0;
+        if(rand < 8){
         for (int i = 0; i < 10; i++) {
             if(maps[rand][i] == 'c') crazynum++;
             else if(maps[rand][i] == 'e') easynum++;
@@ -109,7 +114,11 @@ public class GameEngine extends JPanel {
         for (int i = 0; i < nullnum; i++) {
             Enemies.add(new NullEnemy("NullEnemy" + i, (int) (800 / zoomLevel / 2 + gridSize* 2 * i - 150), gridSize + 10, gridSize, gridSize));//"enemy"
         }
-                
+        }
+        else if(rand == 8){
+            Enemies.add(new BossShield("BossShield", (int) (800 / zoomLevel / 2 + gridSize* 2 - 150), gridSize + 10, gridSize*4, gridSize*4));
+            isBossAlive = true;
+        }
     }
 
     /** <p> This method draws into the screen. Also move the backgrounds. </p> */
@@ -118,7 +127,7 @@ public class GameEngine extends JPanel {
         super.paintComponent(grphcs);
         setBackground(Color.BLACK);//hatter
         for (int i = 0; i < backs.size(); i++) {
-            if (score == 10 + (level * 2)) {
+            if (Enemies.size() == 0 && score > 0) {
                 travel = true;
                 score = 0;
                 level++;
@@ -160,7 +169,8 @@ public class GameEngine extends JPanel {
         grphcs.fillRect(5, 555, (int) (190 * (Players.get(0).getBullets().size() / (double) Players.get(0).getMaxBullets())), 40);
         grphcs.setFont(new Font(fontStyle, Font.PLAIN, 30));
         grphcs.setColor(Color.red);
-        grphcs.drawString("Score: " + Integer.toString(score) + "/" + Integer.toString(10 + (level * 2)), 320, 40);
+        if(isBossAlive) grphcs.drawString("HP: " + Integer.toString(Enemies.get(0).getHp()) + "/" + Integer.toString(10), 320, 40);
+        else grphcs.drawString("Score: " + Integer.toString((10 + (level * 2)) - Enemies.size()) + "/" + Integer.toString(10 + (level * 2)), 320, 40);
         grphcs.setFont(new Font(fontStyle, Font.PLAIN, 20));
         grphcs.setColor(Color.green);
         grphcs.drawString(Players.get(0).getWhatCollected(), 320, 580);
@@ -181,6 +191,7 @@ public class GameEngine extends JPanel {
                 for (int i = 0; i < Players.size(); i++) {
                     if (Players.get(i).isDead && !gameover) {
                         gameover = true;
+                        isBossAlive = false;
                         Enemies.clear();
                         powerups.clear();
                         explosions.add(new Explosion(Players.get(i).getX(), Players.get(i).getY()));

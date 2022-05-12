@@ -37,6 +37,8 @@ public class Player{
     private int cooldown = 15;
     protected Laser l;
     protected boolean hasLaser = false;
+    protected Image shield;
+    protected boolean canLoseHp = false;
 
     /**
      * <p>
@@ -61,6 +63,10 @@ public class Player{
         direction = new Point(0,-1);
         bulletSpeed=7.0;
         setImage(new ImageIcon(this.getClass().getResource("/images/playership.png")).getImage());
+    }
+    
+    public Image getShield(){
+        return shield;
     }
     
     /** <p> Getter of the bullet speed </p> 
@@ -119,6 +125,7 @@ public class Player{
      */
     public void draw(Graphics g, double zoomLevel, int xOffset, int yOffset) {
         g.drawImage(image, (int)(x * zoomLevel + xOffset), (int)(y * zoomLevel + yOffset), (int)(width * zoomLevel), (int)(height * zoomLevel), null);
+        if(!canLoseHp) g.drawImage(shield, (int)(x * zoomLevel + xOffset), (int)(y * zoomLevel + yOffset), (int)(width * zoomLevel), (int)(height * zoomLevel), null);
         for (int i = 0; i < bullets.size(); i++) {
             if(bullets.get(i).isIsDead()) bullets.remove(i);
             else g.drawImage(bullets.get(i).getImg(),
@@ -192,6 +199,7 @@ public class Player{
             l.move(x, y);
             if(l.isIsDead()) hasLaser = false;
         }
+        if(!inBox(0, 0, (int)(800/GameEngine.zoomLevel))) isDead=true;
     }
 
     /** <p> Setter of the collected powerup label cooldown. Literaly how many frames it will be visible. </p> 
@@ -275,5 +283,9 @@ public class Player{
      * @return if the player coordinates in a box*/
     public boolean inBox(int x0, int y0){
         return (x0 >= x && x0 <= x+width && y0 >= y && y0 <= y+width);
+    }
+    
+        public boolean inBox(int x0, int y0, int boxSize){
+        return (x >= x0 && x <= x0+boxSize && y >= y0 && y <= y0+boxSize);
     }
 }
