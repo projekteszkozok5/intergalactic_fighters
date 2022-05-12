@@ -19,6 +19,10 @@ jobs:
          root: ./
          paths:
            - docs/
+      - attach_workspace:
+          at: ./target
+      - store_artifacts:
+          path: ./target
 
   test:
     docker:
