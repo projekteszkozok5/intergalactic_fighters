@@ -4,6 +4,8 @@ Maven tests in the root: mvn test
 
 Maven build in the root: mvn clean install
 
+Letölthető játék: https://projekteszkozok5.github.io/intergalactic_fighters/download/index.html
+
 Sonarqube: https://sonarcloud.io/summary/new_code?id=projekteszkozok5_intergalactic_fighters
 
 Mérföldkövenként generált dokumentáció: https://projekteszkozok5.github.io/intergalactic_fighters/
